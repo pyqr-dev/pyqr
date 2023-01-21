@@ -1,0 +1,50 @@
+# based on Danielle Navarro's work: https://github.com/djnavarro/arch-r/blob/main/.github/workflows/build-image.yaml
+name: Publish images
+
+on:
+  push:
+    branches: ['main']
+    
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build-and-push-image:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - dockerfile: ./base/Dockerfile
+            image: ghcr.io/ijlyttle/pyqr-base
+            
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Login to container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata 
+        id: meta
+        uses: docker/metadata-action@4
+        with:
+          images: ${{ matrix.image }}
+
+      - name: Build and push image
+        uses: docker/build-push-action@3
+        with:
+          context: .
+          file: ${{ matrix.dockerfile }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
