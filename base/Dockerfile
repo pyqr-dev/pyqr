@@ -1,5 +1,10 @@
 FROM ubuntu:20.04
 
+LABEL org.opencontainers.image.source "https://github.com/ijlyttle/pyqr" 
+LABEL org.opencontainers.image.authors "Ian Lyttle <ijlyttle@me.com>" 
+LABEL org.opencontainers.image.description "Foundation for GitHub Actions runner to install Python/Quarto/R"
+LABEL org.opencontainers.image.licenses "MIT"
+
 # set environment
 ENV TZ Etc/UTC
 ENV DEBIAN_FRONTEND noninteractive
