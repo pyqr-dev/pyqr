@@ -39,8 +39,8 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: ${{ matrix.image }}
-        tags:
-          type=edge
+          tags:
+            type=edge
 
       - name: Build and push image
         uses: docker/build-push-action@v3
