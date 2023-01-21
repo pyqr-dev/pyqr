@@ -26,7 +26,14 @@ A couple of points that I can't quite reconcile:
 
 ## Acknowledgements
 
-This work draws from a bunch of inspirations, which include:
+Once I started this, I came across [Posit's r-docker project](https://github.com/rstudio/r-docker), whose purpose is tantalizingly close to the purpose of this project:
+
+  - r-docker is meant to support installation of R.
+  - this project is meant to support installation of Python, Quarto, and R.
+
+Given how close these are, and that Posit is *way* more capable than I am, we should not be surprised if this project has a short life.
+
+This work also draws from these inspirations:
 
 - Brian Holt's [Complete Introduction to Containers (feat. Docker)](https://frontendmasters.com/courses/complete-intro-containers/), offered by Frontend Masters.
 - Danielle Navarro's blog post, [*Playing with Docker*](https://blog.djnavarro.net/posts/2023-01-01_playing-with-docker/), and its [accompanying repository](https://github.com/djnavarro/arch-r).
