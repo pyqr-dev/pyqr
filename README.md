@@ -4,7 +4,7 @@ The purpose of this (set of) container(s) is to provide a foundation upon which 
 
 - [actions/setup-python](https://github.com/actions/setup-python)
 - [quarto-dev/quarto-actions](https://github.com/quarto-dev/quarto-actions) (`setup`, `render`, `publish`)
-- [r-lib/actions](https://github.com/r-lib/actions) (`setup-r`, `setup-r-dependencies`, `setup-renv`, `check-r-package`, `setup-pandoc`)
+- [r-lib/actions](https://github.com/r-lib/actions) (`setup-r`, `setup-r-dependencies`, `setup-renv`, `check-r-package`, `setup-pandoc`, `setup-tinytex`)
 
 In a GitHub actions workflow (once I have everything working), you could use this container using syntax like this:
 
