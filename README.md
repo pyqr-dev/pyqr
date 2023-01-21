@@ -1,6 +1,6 @@
 # pyqr
 
-The purpose of this (set of) container(s) is to provide a foundation upon which these GitHub Actions can be run:
+The purpose of this (set of) image(s) is to provide a foundation upon which these GitHub Actions can be run:
 
 - [actions/setup-python](https://github.com/actions/setup-python)
 - [quarto-dev/quarto-actions](https://github.com/quarto-dev/quarto-actions) (`setup`, `render`, `publish`)
