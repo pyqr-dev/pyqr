@@ -24,6 +24,17 @@ A couple of points that I can't quite reconcile:
 - It's bad form to put into production a container running as `root`. For example, the Rocker containers each implement a `docker` user.
 - On github.com, the publicly-available runners run as `root`; the quarto and r-lib actions depend on this to install stuff.
 
+## Usage
+
+As noted above, the built container runs as `root`. As well, these environment variables are set:
+
+```dockerfile
+ENV TZ=Etc/UTC
+ENV DEBIAN_FRONTEND=noninteractive
+ENV LANG=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
+```
+
 ## Acknowledgements
 
 Once I started this, I came across [Posit's r-docker project](https://github.com/rstudio/r-docker), whose purpose is tantalizingly close to the purpose of this project:

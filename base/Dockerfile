@@ -6,14 +6,14 @@ LABEL org.opencontainers.image.description "Foundation for GitHub Actions runner
 LABEL org.opencontainers.image.licenses "MIT"
 
 # set environment
-ENV TZ Etc/UTC
-ENV DEBIAN_FRONTEND noninteractive
+ENV TZ=Etc/UTC
+ENV DEBIAN_FRONTEND=noninteractive
 
 # package (why)
 #   sudo (other actions)
 #   git (gh-pages)
 #   rsync (pkgdown gh-pages deploy)
-#   curl (JFrog, also below)
+#   curl (used below)
 #   wget (quarto)
 #   jq (quarto)
 #   gdebi-core (pandoc)
