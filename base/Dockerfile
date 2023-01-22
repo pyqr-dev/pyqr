@@ -18,6 +18,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 #   jq (quarto)
 #   gdebi-core (pandoc)
 #   locales (R)
+#   ca-certificates (curl, due to --no-install-recommends)
+#   tzdata (R, tinytex)
 RUN apt-get update \
   && apt-get install -y --no-install-recommends\
   sudo \ 
@@ -28,6 +30,7 @@ RUN apt-get update \
   jq \
   gdebi-core \
   locales \
+  ca-certificates \
   tzdata
 
 # gh cli (quarto), ref: https://github.com/cli/cli/blob/trunk/docs/install_linux.md#debian-ubuntu-linux-raspberry-pi-os-apt
