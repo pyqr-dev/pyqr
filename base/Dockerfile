@@ -19,7 +19,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 #   gdebi-core (pandoc)
 #   locales (R)
 RUN apt-get update \
-  && apt-get install -y \
+  && apt-get install -y --no-install-recommends\
   sudo \ 
   git \
   rsync \
@@ -27,7 +27,8 @@ RUN apt-get update \
   wget \
   jq \
   gdebi-core \
-  locales 
+  locales \
+  tzdata
 
 # gh cli (quarto), ref: https://github.com/cli/cli/blob/trunk/docs/install_linux.md#debian-ubuntu-linux-raspberry-pi-os-apt
 RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
