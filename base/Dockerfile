@@ -19,6 +19,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 #   gdebi-core (pandoc)
 #   locales (R)
 #   tzdata (R, tinytex)
+#   texinfo (R, tinytex - due to setup-tinytex action)
 RUN apt-get update \
   && apt-get install -y\
   sudo \ 
@@ -29,7 +30,8 @@ RUN apt-get update \
   jq \
   gdebi-core \
   locales \
-  tzdata
+  tzdata \
+  texinfo
 
 # gh cli (quarto), ref: https://github.com/cli/cli/blob/trunk/docs/install_linux.md#debian-ubuntu-linux-raspberry-pi-os-apt
 RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
