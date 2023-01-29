@@ -1,4 +1,5 @@
 # based on Danielle Navarro's work: https://github.com/djnavarro/arch-r/blob/main/.github/workflows/build-image.yaml
+# also inspired by organization of Posit's r-docker project: https://github.com/rstudio/r-docker
 name: Publish images
 
 on:
@@ -7,6 +8,7 @@ on:
     
 env:
   REGISTRY: ghcr.io
+  ACCOUNT: ${{ github.repository_owner }}
 
 jobs:
   build-and-push-image:
@@ -15,9 +17,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - context: ./base
-            image: ghcr.io/ijlyttle/pyqr-base        
+        context: [base]
+        dist: [focal]    
     
     permissions:
       contents: read
@@ -44,7 +45,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ matrix.image }}
+          images: ${{ env.REGISTRY }}/${{ env.ACCOUNT }}/pyqr-${{ matrix.context }}
           tags:
             type=edge
 
@@ -52,7 +53,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           platforms: "linux/amd64,linux/arm64"
-          context: ${{ matrix.context }}
+          context: ./${{ matrix.context }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
