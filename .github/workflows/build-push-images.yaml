@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        context: [base]
+        level: [base]
         dist: [focal]    
     
     permissions:
@@ -45,7 +45,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.REGISTRY }}/${{ env.ACCOUNT }}/pyqr-${{ matrix.context }}
+          images: ${{ env.REGISTRY }}/${{ env.ACCOUNT }}/pyqr-${{ matrix.level }}
           tags:
             type=edge
 
@@ -53,7 +53,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           platforms: "linux/amd64,linux/arm64"
-          context: ./${{ matrix.context }}
+          context: ./${{ matrix.level }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
