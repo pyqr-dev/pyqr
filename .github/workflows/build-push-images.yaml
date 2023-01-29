@@ -16,8 +16,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        level: [base]
-        dist: [focal]    
+        level: ['base']
+        dist: ['focal']    
     
     permissions:
       contents: read
@@ -46,14 +46,14 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ github.repository }}-${{ matrix.level }}
           flavor:
-            suffix: -${{ matrix.dist }}
+            suffix: '-${{ matrix.dist }}'
           tags:
             type=edge
 
       - name: Build and push image
         uses: docker/build-push-action@v3
         with:
-          platforms: "linux/amd64,linux/arm64"
+          platforms: 'linux/amd64,linux/arm64'
           context: ./${{ matrix.level }}/${{ matrix.dist }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
