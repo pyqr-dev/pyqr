@@ -45,8 +45,8 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: ${{ env.REGISTRY }}/${{ github.repository }}-${{ matrix.level }}
-          flavor:
-            suffix: '-${{ matrix.dist }}'
+          flavor: |
+            suffix=-${{ matrix.dist }}
           tags:
             type=edge
 
