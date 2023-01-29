@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:focal
 
 LABEL org.opencontainers.image.source "https://github.com/ijlyttle/pyqr" 
 LABEL org.opencontainers.image.authors "Ian Lyttle <ijlyttle@me.com>" 
