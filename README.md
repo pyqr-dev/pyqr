@@ -13,7 +13,7 @@ jobs:
   <name-of-job>:
     runs-on: <name-of-runner>
     container:
-      image: ghcr.io/ijlyttle/pyqr-base:edge
+      image: ghcr.io/ijlyttle/pyqr-base:edge-focal
 ```
 
 At present, I'm getting things to work, hence the `edge` tag. At some point, I'll implment proper versioning.
