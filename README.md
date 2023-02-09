@@ -16,7 +16,7 @@ jobs:
       image: ghcr.io/ijlyttle/pyqr-base:edge-focal
 ```
 
-At present, I'm getting things to work, hence the `edge` tag. At some point, I'll implment proper versioning.
+At present, I'm getting things to work, hence the `edge` tag. At some point, I'll implement proper versioning.
 
 This container runs as `root` because the quarto and r-lib actions include some `sudo` commands. 
 A couple of points that I can't quite reconcile:
