@@ -14,8 +14,11 @@ env:
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
-    working-directory: ./docker
 
+    defaults:
+      run:
+        working-directory: ./docker
+ 
     strategy:
       fail-fast: false
       matrix:
