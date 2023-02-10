@@ -5,14 +5,14 @@ name: Publish images
 on:
   push:
     branches: ['main']
-    
+
 env:
   REGISTRY: ghcr.io
 
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
-
+ 
     strategy:
       fail-fast: false
       matrix:
@@ -54,7 +54,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           platforms: 'linux/amd64,linux/arm64'
-          context: ./${{ matrix.level }}/${{ matrix.dist }}
+          context: ./docker/${{ matrix.level }}/${{ matrix.dist }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
