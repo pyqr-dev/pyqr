@@ -44,9 +44,9 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.REGISTRY }}/${{ github.repository }}
+          images: ${{ env.REGISTRY }}/${{ github.repository }}-${{ matrix.level }}
           flavor: |
-            suffix=-${{ matrix.level }}-${{ matrix.dist }}
+            suffix=-${{ matrix.dist }}
           tags:
             type=edge,branch=feat-4-ansible
 
