@@ -1,0 +1,10 @@
+- hosts: localhost
+  become: true
+  pre_tasks:
+    - name: Update cache
+      apt:
+        update_cache: true
+      tags:
+      - R
+  tasks:
+  - include: tasks/R.yml

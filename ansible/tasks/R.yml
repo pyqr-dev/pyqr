@@ -1,0 +1,17 @@
+# ref: https://github.com/r-lib/rig
+  
+  # TODO: use a SHA
+- name: Install rig (R installer)
+  shell: curl -Ls https://github.com/r-lib/rig/tarball/{{ sha }} | sudo tar xz -C /usr/local
+  vars:
+    # version 5.0.3
+    sha: d0c46afc428301c375897fad403f74a945cbbfdc 
+  tags:
+  - R
+
+- name: Install R
+  shell: rig add {{ version }}
+  vars:
+    version: 4.2
+  tags: 
+  - R
