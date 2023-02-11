@@ -50,4 +50,13 @@ ENV LC_ALL=en_US.UTF-8
 RUN apt-get clean \
   && rm -rf /var/lib/apt/lists/*   
 
+# add user `docker`
+RUN useradd docker \
+	&& mkdir /home/docker \
+	&& chown docker:docker /home/docker 
+
+# run as user
+USER docker
+WORKDIR /home/docker
+
 CMD ["bash"]
