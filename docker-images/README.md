@@ -18,11 +18,14 @@ jobs:
 
 At present, I'm getting things to work, hence the `edge` tag. At some point, I'll implement proper versioning.
 
-This container runs as `root` because the quarto and r-lib actions include some `sudo` commands. 
-A couple of points that I can't quite reconcile:
+These environment variables are set:
 
-- It's bad form to put into production a container running as `root`. For example, the Rocker containers each implement a `docker` user.
-- On github.com, the publicly-available runners run as `root`; the quarto and r-lib actions depend on this to install stuff.
+```dockerfile
+ENV TZ=Etc/UTC
+ENV DEBIAN_FRONTEND=noninteractive
+ENV LANG=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
+```
 
 ## Building
 
@@ -35,13 +38,17 @@ docker buildx build --tag base-jammy --file docker-images/base/jammy/Dockerfile 
 
 ## Usage
 
-As noted above, the built container runs as `root`. As well, these environment variables are set:
+Following the [rocker project](https://github.com/rocker-org/rocker), this container creates a default user `docker`. 
+You start with a `bash` shell in the `/home/docker` directory:
 
-```dockerfile
-ENV TZ=Etc/UTC
-ENV DEBIAN_FRONTEND=noninteractive
-ENV LANG=en_US.UTF-8
-ENV LC_ALL=en_US.UTF-8
+```
+docker run -it base-jammy
+```
+
+If you want to run as root, perhaps to install additional software:
+
+```
+docker run -it --user root base-jammy
 ```
 
 ## Acknowledgements
