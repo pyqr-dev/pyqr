@@ -5,6 +5,8 @@ name: Publish images
 on:
   push:
     branches: ['main']
+  pull_request:
+    branches: ['main']
 
 env:
   REGISTRY: ghcr.io
@@ -47,8 +49,9 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ github.repository }}-${{ matrix.level }}
           flavor: |
             suffix=-${{ matrix.dist }}
-          tags:
+          tags: |
             type=edge
+            type=ref,event=pr
 
       - name: Build and push image
         uses: docker/build-push-action@v4
@@ -56,6 +59,6 @@ jobs:
           platforms: 'linux/amd64,linux/arm64'
           context: .
           file: ./docker-images/${{ matrix.level }}/${{ matrix.dist }}/Dockerfile
-          push: true
+          push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
