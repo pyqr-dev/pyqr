@@ -41,7 +41,7 @@ RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | d
   && apt-get install gh -y
 
 # establish locale
-COPY locale.gen /etc/locale.gen
+COPY docker-images/base/locale.gen /etc/locale.gen
 RUN locale-gen 
 ENV LANG=en_US.UTF-8
 ENV LC_ALL=en_US.UTF-8
