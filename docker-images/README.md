@@ -24,6 +24,15 @@ A couple of points that I can't quite reconcile:
 - It's bad form to put into production a container running as `root`. For example, the Rocker containers each implement a `docker` user.
 - On github.com, the publicly-available runners run as `root`; the quarto and r-lib actions depend on this to install stuff.
 
+## Building
+
+I'm not certain that this is the best way to go, but the build context is the root of the repository, and we reach to the files.
+For example:
+
+```bash
+docker buildx build --tag base-jammy --file docker-images/base/jammy/Dockerfile .
+```
+
 ## Usage
 
 As noted above, the built container runs as `root`. As well, these environment variables are set:
