@@ -4,7 +4,7 @@ name: Publish images
 
 on:
   push:
-    branches: ['main', 'refactor-7-context']
+    branches: ['main']
 
 env:
   REGISTRY: ghcr.io
@@ -48,7 +48,7 @@ jobs:
           flavor: |
             suffix=-${{ matrix.dist }}
           tags:
-            type=edge,branch=refactor-7-context
+            type=edge
 
       - name: Build and push image
         uses: docker/build-push-action@v4
