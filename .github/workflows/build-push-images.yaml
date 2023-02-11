@@ -48,7 +48,7 @@ jobs:
           flavor: |
             suffix=-${{ matrix.dist }}
           tags:
-            type=edge
+            type=edge,branch=refactor-7-context
 
       - name: Build and push image
         uses: docker/build-push-action@v4
