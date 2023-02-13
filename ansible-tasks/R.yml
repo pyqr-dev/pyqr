@@ -1,17 +1,11 @@
 # ref: https://github.com/r-lib/rig
 
-- name: Install rig (R installer) - Debian/Ubuntu
+- name: Install rig (R installer) - Ubuntu
   when: |
-    (ansible_facts['distribution'] == "Debian" and 
-        ansible_facts['distribution_major_version'] == "7" or
-        ansible_facts['distribution_major_version'] == "8" or
-        ansible_facts['distribution_major_version'] == "9" or
-    ) or
-    (ansible_facts['distribution'] == "Ubuntu" and 
-        ansible_facts['distribution_major_version'] == "18" or
-        ansible_facts['distribution_major_version'] == "20" or
-        ansible_facts['distribution_major_version'] == "22" or
-    ) or
+    ansible_facts['distribution'] == "Ubuntu" and (
+      ansible_facts['distribution_major_version'] == "20" or
+      ansible_facts['distribution_major_version'] == "22"
+    )
   shell: curl -Ls https://github.com/r-lib/rig/tarball/{{ sha }} | sudo tar xz -C /usr/local
   vars:
     # version 5.0.3
@@ -19,22 +13,18 @@
   tags:
   - R
 
-- name: Check that the somefile.conf exists
-  stat:
-    path: /etc/file.txt
-  register: stat_result
-
 - name: Install rig (R installer) - MacOS
-  when: ansible_facts['family'] == "Darwin"
-  # https://stackoverflow.com/a/44348249/1523865
-  shell: |
-    if brew ls --versions --cask rig >/dev/null; then
-      HOMEBREW_NO_AUTO_UPDATE=1 brew tap r-lib/rig && brew install --cask rig
-    else
-      HOMEBREW_NO_AUTO_UPDATE=1 brew upgrade --cask rig
-    fi
+  become: false
+  when: ansible_facts['os_family'] == "Darwin"
+  community.general.homebrew_cask:
+    name: rig
+    state: present
   tags:
   - R  
+
+# TODO: check if requested version of R already exists
+#   rig list --json
+#   rig resolve {{ version }}
 
 - name: Install R
   shell: rig add {{ version }}
