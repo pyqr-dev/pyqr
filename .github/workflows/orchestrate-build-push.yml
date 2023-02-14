@@ -21,14 +21,12 @@ jobs:
 
       - name: Build base image
         uses: ./.github/workflows/build-push-image.yml
-        secrets: inherit
         with:
           level: base
           dist: ${{ matrix.dist }}
       
       - name: Build inst image
         uses: ./.github/workflows/build-push-image.yml
-        secrets: inherit
         with:
           level: inst
           dist: ${{ matrix.dist }}        
