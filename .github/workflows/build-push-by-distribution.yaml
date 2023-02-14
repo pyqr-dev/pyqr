@@ -1,12 +1,11 @@
-# based on Danielle Navarro's work: https://github.com/djnavarro/arch-r/blob/main/.github/workflows/build-image.yaml
-# also inspired by organization of Posit's r-docker project: https://github.com/rstudio/r-docker
-name: Publish images
+name: Build and Push Images
 
 on:
-  push:
-    branches: ['main']
-  pull_request:
-    branches: ['main']
+  workflow_call:
+    inputs:
+      level:
+        required: true
+        type: string
 
 env:
   REGISTRY: ghcr.io
@@ -18,7 +17,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        level: ['base']
         dist: ['focal', 'jammy']    
     
     permissions:
@@ -46,7 +44,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.REGISTRY }}/${{ github.repository }}-${{ matrix.level }}
+          images: ${{ env.REGISTRY }}/${{ github.repository }}-${{ inputs.level }}
           flavor: |
             suffix=-${{ matrix.dist }}
           tags: |
@@ -58,7 +56,7 @@ jobs:
         with:
           platforms: 'linux/amd64'
           context: .
-          file: ./docker-images/${{ matrix.level }}/${{ matrix.dist }}/Dockerfile
+          file: ./docker-images/${{ inputs.level }}/${{ matrix.dist }}/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

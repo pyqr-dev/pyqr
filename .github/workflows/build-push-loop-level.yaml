@@ -1,0 +1,26 @@
+name: Loop over levels
+
+on:
+  push:
+    branches: ['main']
+  pull_request:
+    branches: ['main']
+
+  jobs:
+    build-and-push-image:
+      runs-on: ubuntu-latest  
+
+      strategy:
+        fail-fast: false
+
+      steps:
+        - name: Build base image
+          uses: ./.github/workflows/build-push-by-distrubution.yaml
+            with:
+              level: base
+        
+        - name: Build inst image
+          uses: ./.github/workflows/build-push-by-distrubution.yaml
+            with:
+              level: inst
+          
