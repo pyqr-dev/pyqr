@@ -15,12 +15,12 @@ jobs:
 
     steps:
       - name: Build base image
-        uses: ./.github/workflows/build-push-by-distrubution.yaml
+        uses: ./.github/workflows/build-push-by-distribution.yml
         with:
           level: base
       
       - name: Build inst image
-        uses: ./.github/workflows/build-push-by-distrubution.yaml
+        uses: ./.github/workflows/build-push-by-distribution.yml
         with:
           level: inst
           
