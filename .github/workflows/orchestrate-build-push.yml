@@ -16,6 +16,7 @@ jobs:
       packages: write
 
   inst:
+    needs: base
     uses: ./.github/workflows/build-push-image.yml
     with:
       level: inst
