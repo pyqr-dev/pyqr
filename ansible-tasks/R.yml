@@ -1,0 +1,30 @@
+  # ref: https://github.com/r-lib/rig
+- name: Install R using rig
+  tags: R
+  block:
+    - name: Install rig (R installer) - Ubuntu
+      when: |
+        ansible_facts['distribution'] == "Ubuntu" and (
+          ansible_facts['distribution_major_version'] == "20" or
+          ansible_facts['distribution_major_version'] == "22"
+        )
+      shell: curl -Ls https://github.com/r-lib/rig/tarball/{{ sha }} | sudo tar xz -C /usr/local
+      vars:
+        # version 5.0.3
+        sha: d0c46afc428301c375897fad403f74a945cbbfdc 
+
+    - name: Install rig (R installer) - MacOS
+      when: ansible_facts['os_family'] == "Darwin"
+      become: false
+      community.general.homebrew_cask:
+        name: rig
+        state: present
+
+    # TODO: check if requested version of R already exists
+    #   rig list --json
+    #   rig resolve {{ version }}
+
+    - name: Install R
+      shell: rig add {{ version }}
+      vars:
+        version: 4.2

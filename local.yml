@@ -1,0 +1,38 @@
+- hosts: localhost
+  become: true
+  pre_tasks:
+    - name: Update - Ubuntu
+      when: ansible_facts['distribution'] == "Ubuntu"
+      tags:
+        - always
+      apt:
+        update_cache: true
+
+    - name: Update - MacOS
+      when: ansible_facts['os_family'] == "Darwin"
+      tags:
+        - always
+      become: false
+      block:
+        # ref: https://opensource.com/article/22/6/install-software-macos-ansible-homebrew
+        - name: Check homebrew - MacOS
+          stat:
+            path: /opt/homebrew/bin/brew
+          register: homebrew_check
+
+        # ref: https://brew.sh/
+        - name: Install homebrew - MacOS
+          when:
+            - not homebrew_check.stat.exists
+          shell: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/{{ sha }}/install.sh)"
+          vars:
+            # as of 2023-02-13
+            sha: fc4a19b38608451cabe6ceaa8ffb4fa1300854c8  
+
+        - name: Update homebrew - MacOS
+          community.general.homebrew:
+            update_homebrew: true
+
+  tasks:
+    - import_tasks: ansible-tasks/R.yml
+    - import_tasks: ansible-tasks/gh.yml
