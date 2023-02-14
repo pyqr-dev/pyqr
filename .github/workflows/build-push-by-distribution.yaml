@@ -11,8 +11,7 @@ env:
   REGISTRY: ghcr.io
 
 jobs:
-  build-and-push-image:
-    runs-on: ubuntu-latest
+  build-push-by-distribution:
  
     strategy:
       fail-fast: false

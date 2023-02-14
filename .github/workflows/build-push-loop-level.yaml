@@ -6,21 +6,21 @@ on:
   pull_request:
     branches: ['main']
 
-  jobs:
-    build-and-push-image:
-      runs-on: ubuntu-latest  
+jobs:
+  build-push-by-level:
+    runs-on: ubuntu-latest  
 
-      strategy:
-        fail-fast: false
+    strategy:
+      fail-fast: false
 
-      steps:
-        - name: Build base image
-          uses: ./.github/workflows/build-push-by-distrubution.yaml
-          with:
-            level: base
-        
-        - name: Build inst image
-          uses: ./.github/workflows/build-push-by-distrubution.yaml
-          with:
-            level: inst
+    steps:
+      - name: Build base image
+        uses: ./.github/workflows/build-push-by-distrubution.yaml
+        with:
+          level: base
+      
+      - name: Build inst image
+        uses: ./.github/workflows/build-push-by-distrubution.yaml
+        with:
+          level: inst
           
