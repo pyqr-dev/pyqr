@@ -58,22 +58,25 @@ You can exit to Windows using:
 exit
 ```
 
+## Installation
+
+### Ununtu
+
+### MacOS
+```bash
+xcode-select --install
+```
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/fc4a19b38608451cabe6ceaa8ffb4fa1300854c8/install.sh)"
+```
+
+```bash
+brew install ansible
+```
+
 ## Usage
 
-### Installation
-
-For the first step, using Windows, clone this repository to somewhere "high up" on your `C:` drive; this will make mounting easier from WSL. From a Windows console (e.g. PowerShell, git bash, etc.) **in administrator mode**:
-
+```bash
+ansible-playbook local.yml -K --tags [R, python, quarto] 
 ```
-cd C:/
-```
-
-```
-git clone https://github.schneider-electric.com/ijlyttle/pyqr.git
-```
-
-```
-cd pyqr/ansible
-```
-
-### Install software on WSL

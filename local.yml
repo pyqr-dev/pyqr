@@ -14,7 +14,6 @@
         - always
       become: false
       block:
-
         # ref: https://opensource.com/article/22/6/install-software-macos-ansible-homebrew
         - name: Check homebrew - MacOS
           stat:
@@ -36,3 +35,4 @@
 
   tasks:
     - import_tasks: ansible-tasks/R.yml
+    - import_tasks: ansible-tasks/gh.yml
