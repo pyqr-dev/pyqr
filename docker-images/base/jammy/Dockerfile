@@ -41,9 +41,9 @@ ENV LC_ALL=en_US.UTF-8
 
 # install ansible
 # ref: https://docs.ansible.com/ansible/latest/installation_guide/installation_distros.html#installing-ansible-on-ubuntu
-RUN apt install -y software-properties-common \
+RUN apt-get install -y software-properties-common \
   && add-apt-repository -y --update ppa:ansible/ansible \
-  && apt install -y ansible
+  && apt-get install -y ansible
 
 # install playbooks
 RUN mkdir /usr/local/ansible
