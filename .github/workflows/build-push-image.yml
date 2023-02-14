@@ -20,8 +20,8 @@ jobs:
         dist: ['focal', 'jammy'] 
       
     steps:
-      - name: Enable multiple architectures
-        uses: docker/setup-qemu-action@v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
       - name: Create temporary buildx builder
         uses: docker/setup-buildx-action@v2
