@@ -1,4 +1,4 @@
-name: Loop over levels
+name: Orchestrate - Build and Push
 
 on:
   push:
@@ -12,18 +12,23 @@ jobs:
 
     strategy:
       fail-fast: false
-
+      matrix:
+        dist: ['focal', 'jammy']    
+        
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Build base image
-        uses: ./.github/workflows/build-push-by-distribution.yml
+        uses: ./.github/workflows/build-push-image.yml
+        secrets: inherit
         with:
           level: base
+          dist: ${{ matrix.dist }}
       
       - name: Build inst image
-        uses: ./.github/workflows/build-push-by-distribution.yml
+        uses: ./.github/workflows/build-push-image.yml
+        secrets: inherit
         with:
           level: inst
-          
+          dist: ${{ matrix.dist }}        
