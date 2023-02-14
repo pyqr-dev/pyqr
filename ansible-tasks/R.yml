@@ -8,10 +8,12 @@
           ansible_facts['distribution_major_version'] == "20" or
           ansible_facts['distribution_major_version'] == "22"
         )
-      shell: curl -Ls https://github.com/r-lib/rig/tarball/{{ sha }} | sudo tar xz -C /usr/local
+      # amd64
+      shell: |
+        curl -Ls https://github.com/r-lib/rig/releases/download/v{{ version }}/rig-linux-{{ version }}.tar.gz |
+          sudo tar xz -C /usr/local
       vars:
-        # version 5.0.3
-        sha: d0c46afc428301c375897fad403f74a945cbbfdc 
+        version: 0.5.2
 
     - name: Install rig (R installer) - MacOS
       when: ansible_facts['os_family'] == "Darwin"
