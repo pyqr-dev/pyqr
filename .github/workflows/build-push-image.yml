@@ -18,11 +18,7 @@ jobs:
       fail-fast: false
       matrix:
         dist: ['focal', 'jammy'] 
-  
-    permissions:
-      contents: read
-      packages: write
-    
+      
     steps:
       - name: Enable multiple architectures
         uses: docker/setup-qemu-action@v2
