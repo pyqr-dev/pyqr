@@ -1,0 +1,55 @@
+# ref: https://github.com/pyenv/pyenv-installer
+- name: Install Python using pyenv
+  tags: python
+  become: false
+  block:
+    - when: |
+        ansible_facts['distribution'] == "Ubuntu" and (
+          ansible_facts['distribution_major_version'] == "20" or
+          ansible_facts['distribution_major_version'] == "22"
+        )
+      block: 
+        - name: Install pyenv (python installer) - Ubuntu
+          shell: |
+              curl -L https://github.com/pyenv/pyenv-installer/raw/{{ hash }}/bin/pyenv-installer | 
+                bash
+          vars:
+            # as of 2023-02-14
+            hash: f971e5d01ac2cba8be2ebe97c652506d90185807
+
+        - name: Update shell for pyenv - Ubuntu
+          shell: |
+            echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
+            echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
+            echo 'eval "$(pyenv init -)"' >> ~/.zshrc
+            echo 'export PYTHON_CONFIGURE_OPTS="--enable-shared"'  >> ~/.zshrc
+
+    - when: ansible_facts['os_family'] == "Darwin"
+      block:
+        - name: Install pyenv (python installer) - MacOS
+          community.general.homebrew:
+            name: pyenv
+            state: present
+
+        - name: Check if pyenv configured in .bashrc
+          lineinfile: 
+            path:  ~/.zshrc
+            line: "export PYENV_ROOT"
+          check_mode: yes
+          register: presence
+
+          # TODO: check if PYENV_ROOT is in ~/.zshrc
+        - name: Update shell for pyenv - MacOS
+          when: not presence
+          become: false
+          shell: |
+            echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
+            echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
+            echo 'eval "$(pyenv init -)"' >> ~/.zshrc
+            echo 'export PYTHON_CONFIGURE_OPTS="--enable-shared"'  >> ~/.zshrc
+
+    - name: Install Python
+      shell: |
+        pyenv install {{ version }}
+      vars: 
+        version: 3.9.16
