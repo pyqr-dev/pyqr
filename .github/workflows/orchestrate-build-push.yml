@@ -15,11 +15,11 @@ jobs:
       contents: read
       packages: write
 
-  inst:
+  batch:
     needs: base
     uses: ./.github/workflows/build-push-image.yml
     with:
-      level: inst
+      level: batch
     permissions:
       contents: read
       packages: write
