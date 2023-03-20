@@ -1,55 +1,75 @@
 # ref: https://github.com/pyenv/pyenv-installer
-- name: Install Python using pyenv
-  tags: python
+- name: Install pyenv
+  tags: pyenv
   become: false
   block:
-    - when: |
+    - name: Install pyenv - Ubuntu
+      when: |
         ansible_facts['distribution'] == "Ubuntu" and (
           ansible_facts['distribution_major_version'] == "20" or
           ansible_facts['distribution_major_version'] == "22"
         )
-      block: 
-        - name: Install pyenv (python installer) - Ubuntu
-          shell: |
-              curl -L https://github.com/pyenv/pyenv-installer/raw/{{ hash }}/bin/pyenv-installer | 
-                bash
-          vars:
-            # as of 2023-02-14
-            hash: f971e5d01ac2cba8be2ebe97c652506d90185807
+      vars:
+        # as of 2023-02-14
+        hash: f971e5d01ac2cba8be2ebe97c652506d90185807        
+      shell: |
+          curl -L https://github.com/pyenv/pyenv-installer/raw/{{ hash }}/bin/pyenv-installer | 
+            bash
 
-        - name: Update shell for pyenv - Ubuntu
-          shell: |
-            echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
-            echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
-            echo 'eval "$(pyenv init -)"' >> ~/.zshrc
-            echo 'export PYTHON_CONFIGURE_OPTS="--enable-shared"'  >> ~/.zshrc
+    - name: Install pyenv - MacOS
+      when: ansible_facts['os_family'] == "Darwin"
+      community.general.homebrew:
+        name: pyenv
+        state: present
 
-    - when: ansible_facts['os_family'] == "Darwin"
-      block:
-        - name: Install pyenv (python installer) - MacOS
-          community.general.homebrew:
-            name: pyenv
-            state: present
+- name: Update login scripts for pyenv
+  tags: pyenv
+  become: false
+  vars:
+    # using `--enable-shared` to support reticulate: 
+    #   https://rstudio.github.io/reticulate/articles/versions.html#locating-python
+    pyenv_config: |
+      export PYENV_ROOT="$HOME/.pyenv"
+      command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+      eval "$(pyenv init -)"
+      export PYTHON_CONFIGURE_OPTS="--enable-shared"
+  block:
+    - name: .bashrc
+      ansible.builtin.blockinfile:
+        path: ~/.bashrc
+        create: true
+        block: "{{ pyenv_config }}"
+    
+    - name: .profile
+      ansible.builtin.blockinfile:
+        path: ~/.profile
+        create: true
+        block: "{{ pyenv_config }}"
+     
+    - name: .zshrc
+      ansible.builtin.blockinfile:
+        path: ~/.zshrc
+        create: true
+        block: "{{ pyenv_config }}"
+     
+    - name: .zprofile
+      ansible.builtin.blockinfile:
+        path: ~/.zprofile
+        create: true
+        block: "{{ pyenv_config }}"
 
-        - name: Check if pyenv configured in .bashrc
-          lineinfile: 
-            path:  ~/.zshrc
-            line: "export PYENV_ROOT"
-          check_mode: yes
-          register: presence
-
-          # TODO: check if PYENV_ROOT is in ~/.zshrc
-        - name: Update shell for pyenv - MacOS
-          when: not presence
-          become: false
-          shell: |
-            echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
-            echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
-            echo 'eval "$(pyenv init -)"' >> ~/.zshrc
-            echo 'export PYTHON_CONFIGURE_OPTS="--enable-shared"'  >> ~/.zshrc
-
+- name: Manage Python installations
+  tags: pyenv, python
+  vars:
+    python_version: 3.11.2
+  block:      
     - name: Install Python
       shell: |
-        pyenv install {{ version }}
-      vars: 
-        version: 3.9.16
+        pyenv install -s {{ python_version }}
+
+    - name: Set default version of Python
+      shell: |
+        pyenv global {{ python_version }}
+
+
+

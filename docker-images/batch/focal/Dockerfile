@@ -13,6 +13,7 @@ COPY ansible-tasks/ /usr/local/ansible/ansible-tasks/
 # - putting Quarto last will save build time, as 
 
 # install Python
+RUN ansible-playbook /usr/local/ansible/local.yml --tags pyenv
 
 # install R
 RUN ansible-playbook /usr/local/ansible/local.yml --tags R
