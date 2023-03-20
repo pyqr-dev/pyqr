@@ -1,15 +1,15 @@
   # ref: https://github.com/r-lib/rig
 - name: Install R using rig
-  tags: R
   block:
     - name: Install rig (R installer) - Ubuntu
+      tags: rig
       when: |
         ansible_facts['distribution'] == "Ubuntu" and (
           ansible_facts['distribution_major_version'] == "20" or
           ansible_facts['distribution_major_version'] == "22"
         )
       become: true
-      # amd64
+      # amd64, TODO: ponder how to build containter image for arm64
       shell: |
         curl -Ls https://github.com/r-lib/rig/releases/download/v{{ version }}/rig-linux-{{ version }}.tar.gz |
           sudo tar xz -C /usr/local
@@ -18,6 +18,7 @@
 
     - name: Install rig (R installer) - MacOS
       when: ansible_facts['os_family'] == "Darwin"
+      tags: rig
       become: false
       community.general.homebrew_cask:
         name: rig
@@ -28,6 +29,7 @@
     #   rig resolve {{ version }}
 
     - name: Install R
+      tags: rig, R
       shell: rig add {{ version }}
       vars:
         version: 4.2
