@@ -33,25 +33,28 @@ RUN apt-get update \
   tzdata \
   texinfo
 
+# python-centric packages
+# ref: https://github.com/pyenv/pyenv/wiki#suggested-build-environment
+RUN apt-get install -y\
+  build-essential\
+  libssl-dev\
+  zlib1g-dev\
+  libbz2-dev\
+  libreadline-dev\
+  libsqlite3-dev\
+  libncursesw5-dev\ 
+  xz-utils\
+  tk-dev\ 
+  libxml2-dev\ 
+  libxmlsec1-dev\ 
+  libffi-dev\ 
+  liblzma-dev\
+
 # establish locale
 COPY docker-images/base/locale.gen /etc/locale.gen
 RUN locale-gen 
 ENV LANG=en_US.UTF-8
 ENV LC_ALL=en_US.UTF-8
-
-# install ansible
-# ref: https://docs.ansible.com/ansible/latest/installation_guide/installation_distros.html#installing-ansible-on-ubuntu
-RUN apt-get install -y software-properties-common \
-  && add-apt-repository -y --update ppa:ansible/ansible \
-  && apt-get install -y ansible
-
-# install playbooks
-RUN mkdir /usr/local/ansible
-COPY local.yml /usr/local/ansible/local.yml
-COPY ansible-tasks/ /usr/local/ansible/ansible-tasks/
-
-# install gh (quarto)
-RUN ansible-playbook /usr/local/ansible/local.yml --tags gh
 
 # cleanup
 RUN apt-get clean \
