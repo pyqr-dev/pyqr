@@ -58,6 +58,12 @@
         create: true
         block: "{{ pyenv_config }}"
 
+- name: Restart shell
+  tags: pyenv
+  become: false
+  shell: |
+    exec "$SHELL"
+
 - name: Manage Python installations
   tags: pyenv, python
   vars:
