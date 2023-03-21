@@ -58,11 +58,8 @@
         create: true
         block: "{{ pyenv_config }}"
 
-    - name: Invoke
-      shell: "{{ pyenv_config }}"
-
 - name: Manage Python installations
-  tags: pyenv, python
+  tags: python
   vars:
     python_version: 3.11.2
   block:      
