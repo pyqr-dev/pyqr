@@ -34,35 +34,32 @@
       eval "$(pyenv init -)"
       export PYTHON_CONFIGURE_OPTS="--enable-shared"
   block:
-    - name: .bashrc
+    - name: Amend .bashrc
       ansible.builtin.blockinfile:
         path: ~/.bashrc
         create: true
         block: "{{ pyenv_config }}"
     
-    - name: .profile
+    - name: Amend .profile
       ansible.builtin.blockinfile:
         path: ~/.profile
         create: true
         block: "{{ pyenv_config }}"
      
-    - name: .zshrc
+    - name: Amend .zshrc
       ansible.builtin.blockinfile:
         path: ~/.zshrc
         create: true
         block: "{{ pyenv_config }}"
      
-    - name: .zprofile
+    - name: Amend .zprofile
       ansible.builtin.blockinfile:
         path: ~/.zprofile
         create: true
         block: "{{ pyenv_config }}"
 
-- name: Restart shell
-  tags: pyenv
-  become: true
-  shell: |
-    exec "$SHELL"
+    - name: Invoke
+      shell: "{{ pyenv_config }}"
 
 - name: Manage Python installations
   tags: pyenv, python
