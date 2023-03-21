@@ -7,7 +7,7 @@ LABEL org.opencontainers.image.licenses "MIT"
 
 # set environment
 ENV TZ=Etc/UTC
-ENV DEBIAN_FRONTEND=noninteractive
+ARG DEBIAN_FRONTEND=noninteractive
 
 # package (why)
 #   sudo (other actions)
