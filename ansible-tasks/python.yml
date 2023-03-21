@@ -66,10 +66,13 @@
     - name: Install Python
       shell: |
         pyenv install -s {{ python_version }}
+      args:
+        executable: /bin/bash
 
     - name: Set default version of Python
       shell: |
         pyenv global {{ python_version }}
-
+      args:
+        executable: /bin/bash
 
 
