@@ -60,7 +60,7 @@
 
 - name: Restart shell
   tags: pyenv
-  become: false
+  become: true
   shell: |
     exec "$SHELL"
 
