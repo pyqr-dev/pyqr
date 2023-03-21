@@ -39,19 +39,13 @@ RUN locale-gen
 ENV LANG=en_US.UTF-8
 ENV LC_ALL=en_US.UTF-8
 
-# install ansible
-# ref: https://docs.ansible.com/ansible/latest/installation_guide/installation_distros.html#installing-ansible-on-ubuntu
-RUN apt-get install -y software-properties-common \
-  && add-apt-repository -y --update ppa:ansible/ansible \
-  && apt-get install -y ansible
-
-# install playbooks
-RUN mkdir /usr/local/ansible
-COPY local.yml /usr/local/ansible/local.yml
-COPY ansible-tasks/ /usr/local/ansible/ansible-tasks/
-
 # install gh (quarto)
-RUN ansible-playbook /usr/local/ansible/local.yml --tags gh
+# ref: https://github.com/cli/cli/blob/trunk/docs/install_linux.md#debian-ubuntu-linux-raspberry-pi-os-apt
+RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+  && sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+  && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+  && sudo apt-get update \
+  && sudo apt-get install -y gh
 
 # cleanup
 RUN apt-get clean \
