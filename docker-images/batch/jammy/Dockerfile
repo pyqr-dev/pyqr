@@ -15,7 +15,7 @@ COPY ansible-tasks/ /usr/local/ansible/ansible-tasks/
 # install Python
 
 # install R
-RUN ansible-playbook /usr/local/ansible/local.yml --tags R
+RUN ansible-playbook /usr/local/ansible/local.yml --tags rig
 
 # install Quarto
 
