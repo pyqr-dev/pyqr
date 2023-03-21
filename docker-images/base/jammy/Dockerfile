@@ -48,13 +48,21 @@ RUN apt-get install -y\
   libxml2-dev\ 
   libxmlsec1-dev\ 
   libffi-dev\ 
-  liblzma-dev\
+  liblzma-dev
 
 # establish locale
 COPY docker-images/base/locale.gen /etc/locale.gen
 RUN locale-gen 
 ENV LANG=en_US.UTF-8
 ENV LC_ALL=en_US.UTF-8
+
+# install gh (quarto)
+# ref: https://github.com/cli/cli/blob/trunk/docs/install_linux.md#debian-ubuntu-linux-raspberry-pi-os-apt
+RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+  && sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+  && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+  && sudo apt-get update \
+  && sudo apt-get install -y gh
 
 # cleanup
 RUN apt-get clean \
