@@ -1,8 +1,5 @@
 FROM ghcr.io/ijlyttle/pyqr-base:edge-focal
 
-# need to install as root
-USER root 
-
 # install pyenv
 # ref: https://github.com/pyenv/pyenv-installer#install
 RUN curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
@@ -23,6 +20,9 @@ RUN pyenv global 3.11.2
 
 # check
 RUN pyenv versions
+
+# need to install as root
+USER root 
 
 # install R
 
