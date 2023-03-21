@@ -57,11 +57,53 @@
         path: ~/.zprofile
         create: true
         block: "{{ pyenv_config }}"
-
-- name: Manage Python installations
+  
+  # ref: https://github.com/pyenv/pyenv/wiki#suggested-build-environment
+- name: Install Python prerequisites
   tags: python
+  block:   
+    - name: Install Python prerequisites - Ubuntu
+      when: |
+        ansible_facts['distribution'] == "Ubuntu" and (
+          ansible_facts['distribution_major_version'] == "20" or
+          ansible_facts['distribution_major_version'] == "22"
+        )
+      become: true
+      apt:
+        name: 
+          - build-essential
+          - libssl-dev
+          - zlib1g-dev 
+          - libbz2-dev
+          - libreadline-dev
+          - libsqlite3-dev
+          - curl 
+          - libncursesw5-dev 
+          - xz-utils 
+          - tk-dev 
+          - libxml2-dev 
+          - libxmlsec1-dev 
+          - libffi-dev 
+          - liblzma-dev
+
+    - name: Install Python prerequisites - MacOS
+      when: ansible_facts['os_family'] == "Darwin"
+      become: false
+      community.general.homebrew:
+        name: 
+          - openssl 
+          - readline
+          - sqlite3
+          - xz
+          - zlib
+          - tcl-tk
+        state: present
+
+- name: Intstall Python 
+  tags: python
+  become: false
   vars:
-    python_version: 3.11.2
+    python_version: 3.11.2 
   block:      
     - name: Install Python
       shell: |
