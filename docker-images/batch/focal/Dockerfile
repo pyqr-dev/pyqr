@@ -14,8 +14,7 @@ COPY ansible-tasks/ /usr/local/ansible/ansible-tasks/
 
 # install Python
 RUN ansible-playbook /usr/local/ansible/local.yml --tags pyenv
-RUN exec bash
-RUN ansible-playbook /usr/local/ansible/local.yml --tags python
+RUN ["/bin/bash", "-c", "ansible-playbook /usr/local/ansible/local.yml --tags python"]
 
 # install R
 RUN ansible-playbook /usr/local/ansible/local.yml --tags rig
