@@ -1,0 +1,26 @@
+name: Orchestrate - Build and Push
+
+on:
+  push:
+    branches: ['main']
+  pull_request:
+    branches: ['main']
+
+jobs:
+  base:
+    uses: ./.github/workflows/build-push-image.yml
+    with:
+      level: base
+    permissions:
+      contents: read
+      packages: write
+
+  batch:
+    needs: base
+    uses: ./.github/workflows/build-push-image.yml
+    with:
+      level: batch
+    permissions:
+      contents: read
+      packages: write
+       
