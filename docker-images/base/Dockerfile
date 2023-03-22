@@ -53,7 +53,7 @@ RUN apt-get install -y\
   liblzma-dev
 
 # establish locale
-COPY docker-images/base/locale.gen /etc/locale.gen
+COPY locale.gen /etc/locale.gen
 RUN locale-gen 
 ENV LANG=en_US.UTF-8
 ENV LC_ALL=en_US.UTF-8
