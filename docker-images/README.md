@@ -30,10 +30,14 @@ ENV LC_ALL=en_US.UTF-8
 ## Building
 
 I'm not certain that this is the best way to go, but the build context is the root of the repository, and we reach to the files.
-For example:
+For example, from `docker-images/base`:
 
 ```bash
-docker buildx build --tag base-jammy --file docker-images/base/jammy/Dockerfile .
+docker buildx build --tag base-jammy .
+```
+
+```bash
+docker buildx build --tag base-focal --build-arg DIST=focal .
 ```
 
 ## Usage
