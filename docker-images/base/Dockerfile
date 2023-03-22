@@ -1,4 +1,6 @@
-FROM ubuntu:focal
+ARG DIST=jammy
+
+FROM ubuntu:${DIST}
 
 LABEL org.opencontainers.image.source "https://github.com/ijlyttle/pyqr" 
 LABEL org.opencontainers.image.authors "Ian Lyttle <ijlyttle@me.com>" 
@@ -68,13 +70,13 @@ RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | s
 RUN apt-get clean \
   && rm -rf /var/lib/apt/lists/*   
 
-# add user `docker`
+ # add user `docker`
 RUN useradd docker \
 	&& mkdir /home/docker \
 	&& chown docker:docker /home/docker 
 
 # run as `docker`
 USER docker
-WORKDIR /home/docker
+WORKDIR /home/docker 
 
 CMD ["bash"]

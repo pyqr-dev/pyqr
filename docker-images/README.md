@@ -33,7 +33,11 @@ I'm not certain that this is the best way to go, but the build context is the ro
 For example:
 
 ```bash
-docker buildx build --tag base-jammy --file docker-images/base/jammy/Dockerfile .
+docker buildx build --tag base-jammy  --file docker-images/base/Dockerfile .
+```
+
+```bash
+docker buildx build --tag base-focal  --file docker-images/base/Dockerfile --build-arg DIST=focal .
 ```
 
 ## Usage
