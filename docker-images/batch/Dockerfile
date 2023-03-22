@@ -25,15 +25,15 @@ USER root
 
 # ====== R
 ARG R_VERSION=4.2.3
-ARG PAK_VERSION devel
+ARG PAK_VERSION=devel
 
 # install R using rig
 # ref: https://github.com/r-lib/rig/blob/main/containers/r/Dockerfile
 RUN ARCH="$(arch)"; \
     if [ "$ARCH" = "aarch64" ]; then ARM64="-arm64"; else ARM64=""; fi; \
     curl -Ls https://github.com/r-lib/rig/releases/download/latest/rig-linux${ARM64}-latest.tar.gz | tar xz -C /usr/local && \
-    rig add release --without-pak && \
-    rig default release && \
+    rig add ${R_VERSION} --without-pak && \
+    rig default ${R_VERSION} && \
     rm -rf /tmp/rig && \
     apt-get clean
 
