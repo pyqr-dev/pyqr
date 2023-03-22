@@ -1,5 +1,4 @@
 ARG DIST=jammy
-
 FROM ubuntu:${DIST}
 
 LABEL org.opencontainers.image.source "https://github.com/ijlyttle/pyqr" 

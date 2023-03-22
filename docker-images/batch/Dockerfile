@@ -1,7 +1,7 @@
 ARG DIST=jammy
-ARG PYTHON_VERSION=3.11.2
-
 FROM ghcr.io/ijlyttle/pyqr-base:edge-${DIST}
+
+ARG PYTHON_VERSION=3.11.2
 
 # install pyenv
 # ref: https://github.com/pyenv/pyenv-installer#install
