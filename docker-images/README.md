@@ -18,18 +18,16 @@ jobs:
 
 At present, I'm getting things to work, hence the `edge` tag. At some point, I'll implement proper versioning.
 
-These environment variables are set:
+These environment variables are set for `base`:
 
 ```dockerfile
 ENV TZ=Etc/UTC
-ENV DEBIAN_FRONTEND=noninteractive
 ENV LANG=en_US.UTF-8
 ENV LC_ALL=en_US.UTF-8
 ```
 
 ## Building
 
-I'm not certain that this is the best way to go, but the build context is the root of the repository, and we reach to the files.
 For example, from `docker-images/base`:
 
 ```bash
