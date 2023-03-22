@@ -16,8 +16,8 @@ RUN cat ~/pyenv.sh >> ~/.zprofile
 RUN rm pyenv.sh
 
 # install 
-RUN pyenv install -s ${PYTHON_VERSION}
-RUN pyenv global ${PYTHON_VERSION}
+RUN .pyenv/bin/pyenv install -s ${PYTHON_VERSION}
+RUN .pyenv/bin/pyenv global ${PYTHON_VERSION}
 
 # need to install as root
 # USER root 
