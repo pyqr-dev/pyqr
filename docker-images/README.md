@@ -26,6 +26,13 @@ ENV LANG=en_US.UTF-8
 ENV LC_ALL=en_US.UTF-8
 ```
 
+These environment variables are set for `batch`:
+
+```dockerfile
+ENV PKG_SYSREQS=true
+ENV R_PKG_SYSREQS2=true
+```
+
 ## Building
 
 For example, from `docker-images/base`:
@@ -67,3 +74,5 @@ This work also draws from these inspirations:
 - Brian Holt's [Complete Introduction to Containers (feat. Docker)](https://frontendmasters.com/courses/complete-intro-containers/), offered by Frontend Masters.
 - Danielle Navarro's blog post, [*Playing with Docker*](https://blog.djnavarro.net/posts/2023-01-01_playing-with-docker/), and its [accompanying repository](https://github.com/djnavarro/arch-r).
 - The [rocker-org/ubuntu-lts](https://github.com/rocker-org/ubuntu-lts) set of Docker images, maintained by Dirk Eddelbuettel et al.
+- Gábor Csárdi wrote a [Docker image for rig](https://github.com/r-lib/rig/blob/main/containers/r/Dockerfile), the image here for R-installation is based on that.
+- Peter Solymos wrote some [Docker images for Quarto](https://github.com/analythium/quarto-docker-examples). from which this work takes inspiration.
