@@ -65,6 +65,29 @@ RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | s
   && sudo apt-get update \
   && sudo apt-get install -y gh
 
+# install pyenv
+# ref: https://github.com/pyenv/pyenv-installer#install
+RUN curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+
+# add config to dotfiles
+COPY --chown=docker:docker --chmod=555 pyenv.sh pyenv.sh
+RUN cat ~/pyenv.sh >> ~/.bashrc
+RUN cat ~/pyenv.sh >> ~/.profile
+RUN cat ~/pyenv.sh >> ~/.zshrc
+RUN cat ~/pyenv.sh >> ~/.zprofile
+RUN rm pyenv.sh
+
+# install rig
+# ref: https://github.com/r-lib/rig/blob/main/containers/r/Dockerfile
+RUN ARCH="$(arch)"; \
+  if [ "$ARCH" = "aarch64" ]; then ARM64="-arm64"; else ARM64=""; fi; \
+  curl -Ls https://github.com/r-lib/rig/releases/download/latest/rig-linux${ARM64}-latest.tar.gz | tar xz -C /usr/local
+
+# install quig
+# ref: https://github.com/ijlyttle/quig
+RUN curl -Ls https://github.com/ijlyttle/quig/releases/latest/download/quig.tar.gz | tar xz -C /opt \
+  && ln -sf /opt/quig/bin/quig /usr/local/bin/quig
+
 # cleanup
 RUN apt-get clean \
   && rm -rf /var/lib/apt/lists/*   

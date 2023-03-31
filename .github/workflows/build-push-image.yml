@@ -51,6 +51,6 @@ jobs:
           context: docker-images/${{ inputs.level }}
           build-args: |
             DIST=${{ matrix.dist }}
-          push: ${{ github.event_name != 'pull_request' }}
+            TAG=${{ steps.meta.outputs.tags[0] }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
