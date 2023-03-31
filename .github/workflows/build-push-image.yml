@@ -44,6 +44,10 @@ jobs:
             type=edge
             type=ref,event=pr
 
+      - name: Debug
+        run: |
+          echo ${{ steps.meta.outputs.tags }}
+
       - name: Build and push image
         uses: docker/build-push-action@v4
         with:
