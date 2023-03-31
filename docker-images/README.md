@@ -1,6 +1,20 @@
 # pyqr - docker
 
-The purpose of this image is to provide a foundation upon which these GitHub Actions can be run:
+This is yet another set of container images, which is especially egregious given all the existing well-supported, well-established container projects. I don't know of a container project that does quite this, so I'm using this as a learning experience. 
+
+It offers containers at three levels:
+
+- **base**: designed for GitHub Actions, can run `actions/setup-python`, etc., or can use `pyenv`, `rig`, etc. 
+- **batch**: designed for GitHub Actions, but has "standard" versions of Python, Quarto, and R already installed.
+- **active**: designed for interactive use, has zsh, stow, ansible, etc. installed.
+
+At present, I'm getting things to work, hence the `edge` tag. At some point, I'll implement proper versioning.
+
+## Levels
+
+### `base`
+
+The purpose of  is to provide a foundation upon which these GitHub Actions can be run:
 
 - [actions/setup-python](https://github.com/actions/setup-python)
 - [quarto-dev/quarto-actions](https://github.com/quarto-dev/quarto-actions) (`setup`, `render`, `publish`)
@@ -13,10 +27,8 @@ jobs:
   <name-of-job>:
     runs-on: <name-of-runner>
     container:
-      image: ghcr.io/ijlyttle/pyqr-base:edge-focal
+      image: ghcr.io/ijlyttle/pyqr-base:edge-jammy
 ```
-
-At present, I'm getting things to work, hence the `edge` tag. At some point, I'll implement proper versioning.
 
 These environment variables are set for `base`:
 
@@ -26,6 +38,10 @@ ENV LANG=en_US.UTF-8
 ENV LC_ALL=en_US.UTF-8
 ```
 
+### `batch`
+
+This installs "standard" versions of Python, Quarto, and R; see the [Dockerfile](batch/Dockerfile) for details. 
+
 These environment variables are set for `batch`:
 
 ```dockerfile
@@ -33,31 +49,50 @@ ENV PKG_SYSREQS=true
 ENV R_PKG_SYSREQS2=true
 ```
 
+### `active`
+
+Not yet built.
+This is designed for interactive development; it will include zsh, oh-my-zsh, ansible, stow, ...
+
 ## Building
 
-For example, from `docker-images/base`:
+For example, from the `docker-images/base` directory:
 
 ```bash
-docker buildx build --tag base-jammy .
+docker buildx build --tag pyqr:base-jammy .
 ```
 
 ```bash
-docker buildx build --tag base-focal --build-arg DIST=focal .
+docker buildx build --tag pyqr:base-focal --build-arg DIST=focal .
 ```
 
 ## Usage
 
-Following the [rocker project](https://github.com/rocker-org/rocker), this container creates a default user `docker`. 
-You start with a `bash` shell in the `/home/docker` directory:
+TODO: note [MacOS M1/M2 emulation challenge](https://github.com/docker/roadmap/issues/384), i.e. `amd64` vs. `arm64`.
 
-```
-docker run -it base-jammy
+Following the [rocker project](https://github.com/rocker-org/rocker), this container creates a default user `docker`. 
+
+### Local
+
+```bash
+docker run -it pyqr:base-jammy
 ```
 
 If you want to run as root, perhaps to install additional software:
 
+```bash
+docker run -it --user root pyqr-base:edge-jammy
 ```
-docker run -it --user root base-jammy
+
+### Remote
+
+```bash
+docker pull ghcr.io/ijlyttle/pyqr-base:edge-jammy
+docker tag ghcr.io/ijlyttle/pyqr-base:edge-jammy pyqr-base:edge-jammy
+```
+
+```bash
+docker run -it --user root pyqr-base:edge-jammy
 ```
 
 ## Acknowledgements
