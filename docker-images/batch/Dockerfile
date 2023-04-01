@@ -1,5 +1,5 @@
 ARG IMAGE_VERSION=edge-jammy
-FROM ghcr.io/ijlyttle/pyqr-base:${IMAGE_VERSION}}
+FROM ghcr.io/ijlyttle/pyqr-base:${IMAGE_VERSION}
 
 # ====== Python
 ARG PYTHON_VERSION=3.11.2
