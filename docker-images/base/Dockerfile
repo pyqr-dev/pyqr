@@ -6,9 +6,6 @@ LABEL org.opencontainers.image.authors "Ian Lyttle <ijlyttle@me.com>"
 LABEL org.opencontainers.image.description "Foundation for GitHub Actions runner to install Python/Quarto/R"
 LABEL org.opencontainers.image.licenses "MIT"
 
-# set build shell
-SHELL ["/bin/bash", "-c"]
-
 # set environment
 ENV TZ=Etc/UTC
 ARG DEBIAN_FRONTEND=noninteractive
@@ -68,18 +65,6 @@ RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | s
   && sudo apt-get update \
   && sudo apt-get install -y gh
 
-# install pyenv
-# ref: https://github.com/pyenv/pyenv-installer#install
-RUN curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
-
-# add config to dotfiles
-COPY --chown=docker:docker --chmod=555 pyenv.sh pyenv.sh
-RUN cat ~/pyenv.sh >> ~/.bashrc
-RUN cat ~/pyenv.sh >> ~/.profile
-RUN cat ~/pyenv.sh >> ~/.zshrc
-RUN cat ~/pyenv.sh >> ~/.zprofile
-RUN rm pyenv.sh
-
 # install rig
 # ref: https://github.com/r-lib/rig/blob/main/containers/r/Dockerfile
 RUN ARCH="$(arch)"; \
@@ -91,11 +76,7 @@ RUN ARCH="$(arch)"; \
 RUN curl -Ls https://github.com/ijlyttle/quig/releases/latest/download/quig.tar.gz | tar xz -C /opt \
   && ln -sf /opt/quig/bin/quig /usr/local/bin/quig
 
-# cleanup
-RUN apt-get clean \
-  && rm -rf /var/lib/apt/lists/*   
-
- # add user `docker`
+# add user `docker`
 RUN useradd docker \
 	&& mkdir /home/docker \
 	&& chown docker:docker /home/docker 
@@ -103,5 +84,21 @@ RUN useradd docker \
 # run as `docker`
 USER docker
 WORKDIR /home/docker 
+
+# install pyenv (as user, `docker`)
+# ref: https://github.com/pyenv/pyenv-installer#install
+RUN curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+
+# add config to dotfiles
+COPY --chown=docker:docker --chmod=555 pyenv.sh pyenv.sh
+RUN cat ~/pyenv.sh >> ~/.bashrc
+RUN cat ~/pyenv.sh >> ~/.profile
+RUN cat ~/pyenv.sh >> ~/.zshrc
+RUN cat ~/pyenv.sh >> ~/.zprofile
+RUN rm pyenv.sh
+
+# cleanup
+RUN apt-get clean \
+  && rm -rf /var/lib/apt/lists/*   
 
 CMD ["bash"]
