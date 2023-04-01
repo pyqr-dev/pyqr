@@ -35,14 +35,10 @@ ENV R_PKG_SYSREQS2=true
 
 ## Building
 
-For example, from `docker-images/base`:
+For example, from `docker-images/batch`:
 
 ```bash
-docker buildx build --tag base-jammy .
-```
-
-```bash
-docker buildx build --tag base-focal --build-arg DIST=focal .
+docker buildx build . --tag local/pyqr-batch:edge-jammy --build-arg IMAGE_VERSION=edge-jammy
 ```
 
 ## Usage
@@ -50,14 +46,14 @@ docker buildx build --tag base-focal --build-arg DIST=focal .
 Following the [rocker project](https://github.com/rocker-org/rocker), this container creates a default user `docker`. 
 You start with a `bash` shell in the `/home/docker` directory:
 
-```
-docker run -it base-jammy
+```bash
+docker run -it local/pyqr-batch:edge-jammy
 ```
 
 If you want to run as root, perhaps to install additional software:
 
-```
-docker run -it --user root base-jammy
+```bash
+docker run -it --user root local/pyqr-batch:edge-jammy
 ```
 
 ## Acknowledgements
