@@ -6,6 +6,9 @@ LABEL org.opencontainers.image.authors "Ian Lyttle <ijlyttle@me.com>"
 LABEL org.opencontainers.image.description "Foundation for GitHub Actions runner to install Python/Quarto/R"
 LABEL org.opencontainers.image.licenses "MIT"
 
+# set build shell
+SHELL ["/bin/bash", "-c"]
+
 # set environment
 ENV TZ=Etc/UTC
 ARG DEBIAN_FRONTEND=noninteractive
