@@ -53,6 +53,7 @@ jobs:
         with:
           platforms: 'linux/amd64'
           context: docker-images/${{ inputs.level }}
+          push: true
           build-args: |
             DIST=${{ matrix.dist }}
             TAG=${{ steps.meta.outputs.tags }}
