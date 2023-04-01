@@ -1,6 +1,5 @@
-ARG DIST=jammy
-ARG TAG=edge
-FROM ghcr.io/ijlyttle/pyqr-base:${TAG}-${DIST}
+ARG IMAGE_VERSION=edge-jammy
+FROM ghcr.io/ijlyttle/pyqr-base:${IMAGE_VERSION}}
 
 # ====== Python
 ARG PYTHON_VERSION=3.11.2
