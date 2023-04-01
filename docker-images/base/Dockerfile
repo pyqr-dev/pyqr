@@ -76,6 +76,10 @@ RUN ARCH="$(arch)"; \
 RUN curl -Ls https://github.com/ijlyttle/quig/releases/latest/download/quig.tar.gz | tar xz -C /opt \
   && ln -sf /opt/quig/bin/quig /usr/local/bin/quig
 
+# cleanup (normally last, but installing pyenv as docker user)
+RUN apt-get clean \
+  && rm -rf /var/lib/apt/lists/*   
+
 # add user `docker`
 RUN useradd docker \
 	&& mkdir /home/docker \
@@ -96,9 +100,5 @@ RUN cat ~/pyenv.sh >> ~/.profile
 RUN cat ~/pyenv.sh >> ~/.zshrc
 RUN cat ~/pyenv.sh >> ~/.zprofile
 RUN rm pyenv.sh
-
-# cleanup
-RUN apt-get clean \
-  && rm -rf /var/lib/apt/lists/*   
 
 CMD ["bash"]
