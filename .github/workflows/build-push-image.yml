@@ -46,7 +46,7 @@ jobs:
 
       - name: Debug
         run: |
-          echo ${{ steps.meta.outputs }}
+          echo ${{ toJSON(steps.meta.outputs) }}
 
       - name: Build and push image
         uses: docker/build-push-action@v4
