@@ -1,20 +1,9 @@
-ARG DIST=jammy
-FROM ghcr.io/ijlyttle/pyqr-base:edge-${DIST}
+ARG IMAGE_REPO=ghcr.io/ijlyttle
+ARG IMAGE_VERSION=edge-jammy
+FROM ${IMAGE_REPO}/pyqr-base:${IMAGE_VERSION}
 
 # ====== Python
 ARG PYTHON_VERSION=3.11.2
-
-# install pyenv
-# ref: https://github.com/pyenv/pyenv-installer#install
-RUN curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
-
-# add config to dotfiles
-COPY --chown=docker:docker --chmod=555 pyenv.sh pyenv.sh
-RUN cat ~/pyenv.sh >> ~/.bashrc
-RUN cat ~/pyenv.sh >> ~/.profile
-RUN cat ~/pyenv.sh >> ~/.zshrc
-RUN cat ~/pyenv.sh >> ~/.zprofile
-RUN rm pyenv.sh
 
 # install Python
 RUN .pyenv/bin/pyenv install -s ${PYTHON_VERSION}
@@ -29,10 +18,7 @@ ARG PAK_VERSION=devel
 
 # install R using rig
 # ref: https://github.com/r-lib/rig/blob/main/containers/r/Dockerfile
-RUN ARCH="$(arch)"; \
-  if [ "$ARCH" = "aarch64" ]; then ARM64="-arm64"; else ARM64=""; fi; \
-  curl -Ls https://github.com/r-lib/rig/releases/download/latest/rig-linux${ARM64}-latest.tar.gz | tar xz -C /usr/local && \
-  rig add ${R_VERSION} --without-pak && \
+RUN rig add ${R_VERSION} --without-pak && \
   rig default ${R_VERSION} && \
   rm -rf /tmp/rig && \
   apt-get clean
@@ -47,14 +33,11 @@ ENV PKG_SYSREQS=true
 ENV R_PKG_SYSREQS2=true
 
 # ====== Quarto
-ARG QUARTO_VERSION=1.3.283
+ARG QUARTO_VERSION=pre_release
 
 # install Quarto
-# ref: https://github.com/analythium/quarto-docker-examples#create-a-quarto-parent-image
-RUN ARCH="$(arch)"; \
-  if [ "$ARCH" = "aarch64" ]; then PLATFORM="arm64"; else PLATFORM="amd64"; fi; \
-  curl -o quarto.deb -L https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-${PLATFORM}.deb && \
-  gdebi --non-interactive quarto.deb
+# ref: https://github.com/ijlyttle/quig
+RUN quig add ${QUARTO_VERSION}
 
 # return to default user
 USER docker

@@ -56,32 +56,24 @@ This is designed for interactive development; it will include zsh, oh-my-zsh, an
 
 ## Building
 
-For example, from the `docker-images/base` directory:
+For example, from `docker-images/batch`:
 
 ```bash
-docker buildx build --tag pyqr:base-jammy .
-```
-
-```bash
-docker buildx build --tag pyqr:base-focal --build-arg DIST=focal .
+docker buildx build . --tag local/pyqr-batch:edge-jammy --build-arg IMAGE_VERSION=edge-jammy
 ```
 
 ## Usage
 
 TODO: note [MacOS M1/M2 emulation challenge](https://github.com/docker/roadmap/issues/384), i.e. `amd64` vs. `arm64`.
 
-Following the [rocker project](https://github.com/rocker-org/rocker), this container creates a default user `docker`. 
-
-### Local
-
 ```bash
-docker run -it pyqr:base-jammy
+docker run -it local/pyqr-batch:edge-jammy
 ```
 
 If you want to run as root, perhaps to install additional software:
 
 ```bash
-docker run -it --user root pyqr-base:edge-jammy
+docker run -it --user root local/pyqr-batch:edge-jammy
 ```
 
 ### Remote
