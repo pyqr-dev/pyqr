@@ -33,5 +33,6 @@
 
   tasks:
     - import_tasks: ansible-tasks/python.yml
+    - import_tasks: ansible-tasks/quarto.yml
     - import_tasks: ansible-tasks/R.yml
     - import_tasks: ansible-tasks/gh.yml

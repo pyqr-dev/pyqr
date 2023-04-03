@@ -1,0 +1,36 @@
+name: Ansible - Walkthrough
+
+on:
+  push:
+    branches: ['main']
+  pull_request:
+    branches: ['main']
+
+jobs:
+  ansible:
+    runs-on: ${{ matrix.os }}
+
+    name: ${{ matrix.os }} 
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+
+    steps:
+      - name: Install Ansible
+        run: |
+          if [ ${{ runner.os }} == "Linux" ]; then
+            apt update
+            apt install software-properties-common
+            add-apt-repository --yes --update ppa:ansible/ansible
+            apt install ansible
+          elif [ ${{ runner.os }} == "macOS" ]; then
+            brew update
+            brew upgrade
+            brew install ansible
+          else
+            echo "${{ runner.os }} not supported"
+            exit 1
+          fi
+        shell: bash    

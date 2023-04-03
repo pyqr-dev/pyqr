@@ -1,120 +1,113 @@
-# ref: https://github.com/pyenv/pyenv-installer
-- name: Install pyenv
-  tags: pyenv
-  become: false
-  block:
-    - name: Install pyenv - Ubuntu
-      when: |
-        ansible_facts['distribution'] == "Ubuntu" and (
-          ansible_facts['distribution_major_version'] == "20" or
-          ansible_facts['distribution_major_version'] == "22"
-        )
-      vars:
-        # as of 2023-02-14
-        hash: f971e5d01ac2cba8be2ebe97c652506d90185807        
-      shell: |
-          curl -L https://github.com/pyenv/pyenv-installer/raw/{{ hash }}/bin/pyenv-installer | 
-            bash
-
-    - name: Install pyenv - MacOS
-      when: ansible_facts['os_family'] == "Darwin"
-      community.general.homebrew:
-        name: pyenv
-        state: present
-
-- name: Update login scripts for pyenv
-  tags: pyenv
-  become: false
-  vars:
-    # using `--enable-shared` to support reticulate: 
-    #   https://rstudio.github.io/reticulate/articles/versions.html#locating-python
-    pyenv_config: |
-      export PYENV_ROOT="$HOME/.pyenv"
-      command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-      eval "$(pyenv init -)"
-      export PYTHON_CONFIGURE_OPTS="--enable-shared"
-  block:
-    - name: Amend .bashrc
-      ansible.builtin.blockinfile:
-        path: ~/.bashrc
-        create: true
-        block: "{{ pyenv_config }}"
-    
-    - name: Amend .profile
-      ansible.builtin.blockinfile:
-        path: ~/.profile
-        create: true
-        block: "{{ pyenv_config }}"
-     
-    - name: Amend .zshrc
-      ansible.builtin.blockinfile:
-        path: ~/.zshrc
-        create: true
-        block: "{{ pyenv_config }}"
-     
-    - name: Amend .zprofile
-      ansible.builtin.blockinfile:
-        path: ~/.zprofile
-        create: true
-        block: "{{ pyenv_config }}"
-  
-  # ref: https://github.com/pyenv/pyenv/wiki#suggested-build-environment
-- name: Install Python prerequisites
+- name: Install python using pyenv
   tags: python
-  block:   
-    - name: Install Python prerequisites - Ubuntu
-      when: |
-        ansible_facts['distribution'] == "Ubuntu" and (
-          ansible_facts['distribution_major_version'] == "20" or
-          ansible_facts['distribution_major_version'] == "22"
-        )
-      become: true
-      apt:
-        name: 
-          - build-essential
-          - libssl-dev
-          - zlib1g-dev 
-          - libbz2-dev
-          - libreadline-dev
-          - libsqlite3-dev
-          - curl 
-          - libncursesw5-dev 
-          - xz-utils 
-          - tk-dev 
-          - libxml2-dev 
-          - libxmlsec1-dev 
-          - libffi-dev 
-          - liblzma-dev
-
-    - name: Install Python prerequisites - MacOS
-      when: ansible_facts['os_family'] == "Darwin"
+  block:
+    # ref: https://github.com/pyenv/pyenv-installer
+    - name: Install pyenv
       become: false
-      community.general.homebrew:
-        name: 
-          - openssl 
-          - readline
-          - sqlite3
-          - xz
-          - zlib
-          - tcl-tk
-        state: present
+      block:
+        - name: Install pyenv - Ubuntu
+          when: ansible_facts['distribution'] == "Ubuntu" 
+          vars:
+            # as of 2023-02-14
+            hash: f971e5d01ac2cba8be2ebe97c652506d90185807        
+          shell: |
+              curl -L https://github.com/pyenv/pyenv-installer/raw/{{ hash }}/bin/pyenv-installer | 
+                bash
+          args:
+            executable: /bin/bash
+            
+        - name: Install pyenv - MacOS
+          when: ansible_facts['os_family'] == "Darwin"
+          community.general.homebrew:
+            name: pyenv
+            state: present
 
-- name: Intstall Python 
-  tags: python
-  become: false
-  vars:
-    python_version: 3.11.2 
-  block:      
-    - name: Install Python
-      shell: |
-        pyenv install -s {{ python_version }}
-      args:
-        executable: /bin/bash
+    - name: Update login scripts for pyenv
+      become: false
+      vars:
+        # using `--enable-shared` to support reticulate: 
+        #   https://rstudio.github.io/reticulate/articles/versions.html#locating-python
+        pyenv_config: |
+          export PYENV_ROOT="$HOME/.pyenv"
+          command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+          eval "$(pyenv init -)"
+          export PYTHON_CONFIGURE_OPTS="--enable-shared"
+      block:
+        - name: Amend .bashrc
+          ansible.builtin.blockinfile:
+            path: ~/.bashrc
+            create: true
+            block: "{{ pyenv_config }}"
+        
+        - name: Amend .profile
+          ansible.builtin.blockinfile:
+            path: ~/.profile
+            create: true
+            block: "{{ pyenv_config }}"
+        
+        - name: Amend .zshrc
+          ansible.builtin.blockinfile:
+            path: ~/.zshrc
+            create: true
+            block: "{{ pyenv_config }}"
+        
+        - name: Amend .zprofile
+          ansible.builtin.blockinfile:
+            path: ~/.zprofile
+            create: true
+            block: "{{ pyenv_config }}"
+      
+      # ref: https://github.com/pyenv/pyenv/wiki#suggested-build-environment
+    - name: Install Python prerequisites
+      block:   
+        - name: Install Python prerequisites - Ubuntu
+          when: ansible_facts['distribution'] == "Ubuntu" 
+          become: true
+          apt:
+            name: 
+              - build-essential
+              - libssl-dev
+              - zlib1g-dev 
+              - libbz2-dev
+              - libreadline-dev
+              - libsqlite3-dev
+              - curl 
+              - libncursesw5-dev 
+              - xz-utils 
+              - tk-dev 
+              - libxml2-dev 
+              - libxmlsec1-dev 
+              - libffi-dev 
+              - liblzma-dev
 
-    - name: Set default version of Python
-      shell: |
-        pyenv global {{ python_version }}
-      args:
-        executable: /bin/bash
+        - name: Install Python prerequisites - MacOS
+          when: ansible_facts['os_family'] == "Darwin"
+          become: false
+          community.general.homebrew:
+            name: 
+              - openssl 
+              - readline
+              - sqlite3
+              - xz
+              - zlib
+              - tcl-tk
+            state: present
+
+    - name: Intstall Python 
+      become: false
+      vars:
+        python_version: 3.11.2 
+      block:      
+        - name: Install Python
+          shell: |
+            pyenv install -s {{ python_version }}
+          args:
+            executable: /bin/bash
+
+        - name: Set default version of Python
+          shell: |
+            pyenv global {{ python_version }}
+          args:
+            executable: /bin/bash
 
 
