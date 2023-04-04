@@ -51,11 +51,13 @@ jobs:
         run: |
           echo "PYENV_ROOT=$HOME/.pyenv" >> $GITHUB_ENV
           echo "$HOME/.pyenv/bin" >> $GITHUB_PATH
+          echo "$HOME/.pyenv/shims" >> $GITHUB_PATH
           echo "PYTHON_CONFIGURE_OPTS=--enable-shared" >> $GITHUB_ENV
+        shell: bash
 
       - name: Check installation
         run: |
-          echo "$PATH"
+          echo $PATH
           pyenv versions
           quarto check
         shell: bash     
