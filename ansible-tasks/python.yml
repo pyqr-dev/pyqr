@@ -100,13 +100,13 @@
       block:      
         - name: Install Python
           shell: |
-            ~/.pyenv/bin/pyenv install -s {{ python_version }}
+            pyenv install -s {{ python_version }}
           args:
             executable: /bin/bash
 
         - name: Set default version of Python
           shell: |
-            ~/.pyenv/bin/pyenv global {{ python_version }}
+            pyenv global {{ python_version }}
           args:
             executable: /bin/bash
 
