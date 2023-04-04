@@ -41,11 +41,10 @@ jobs:
       - name: Install tools
         run: |
           ansible-playbook local.yml --tags "R, python, quarto" -e "ansible_become_password=''"
-        shell: bash 
+        shell: bash -leo pipefail {0} 
 
       - name: Check installation
         run: |
-          exec "$SHELL"
           pyenv versions
           quarto check
-        shell: bash    
+        shell: bash -leo pipefail {0}    
