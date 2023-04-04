@@ -13,9 +13,9 @@ RUN apt-get update \
 
 # ansible
 RUN apt-get install -y software-properties-common \
-  add-apt-repository --yes --update ppa:ansible/ansible \
-  apt-get install -y ansible
-  
+  && add-apt-repository --yes --update ppa:ansible/ansible \
+  && apt-get install -y ansible
+
 # cleanup 
 RUN apt-get clean \
   && rm -rf /var/lib/apt/lists/* 
