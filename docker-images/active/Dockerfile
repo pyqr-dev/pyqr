@@ -5,9 +5,14 @@ FROM ${IMAGE_REPO}/pyqr-batch:${IMAGE_VERSION}
 # need to install as root
 USER root 
 
+# zsh, stow
 RUN apt-get update \
   && apt-get install -y \
-  zsh 
+  zsh \
+  stow
+
+# ohmyzsh ref: https://ohmyz.sh/#install
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # cleanup 
 RUN apt-get clean \
