@@ -45,7 +45,7 @@ jobs:
 
       - name: Check installation
         run: |
-          source ~/.bashrc
+          exec "$SHELL"
           pyenv versions
           quarto check
         shell: bash    
