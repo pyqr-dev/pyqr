@@ -100,7 +100,6 @@
       vars:
         python_version: 3.11.2 
       shell: |
-        echo $PATH
         pyenv install -s {{ python_version }}
         pyenv global {{ python_version }}
       args:
