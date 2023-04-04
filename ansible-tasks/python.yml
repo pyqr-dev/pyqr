@@ -96,7 +96,7 @@
     - name: Install Python, set version 
       become: false
       environment:
-        PATH: "$HOME/.pyenv/bin:{{ ansible_env.PATH }}"
+        PATH: "{{ ansible_env.HOME }}/.pyenv/bin:{{ ansible_env.PATH }}"
       vars:
         python_version: 3.11.2 
       shell: |
