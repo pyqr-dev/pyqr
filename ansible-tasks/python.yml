@@ -56,6 +56,12 @@
             path: ~/.zprofile
             create: true
             block: "{{ pyenv_config }}"
+
+        - name: Init pyenv
+          shell: |
+            {{ pyenv_config }}
+          args:
+            executable: /bin/bash          
       
       # ref: https://github.com/pyenv/pyenv/wiki#suggested-build-environment
     - name: Install Python prerequisites

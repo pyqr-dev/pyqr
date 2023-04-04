@@ -15,9 +15,16 @@
     - name: Install rig (R installer) - MacOS
       when: ansible_facts['os_family'] == "Darwin"
       become: false
-      community.general.homebrew_cask:
-        name: rig
-        state: present
+      block:
+        - name: Tap rig
+          community.general.homebrew_tap:
+            name: r-lib/rig
+            state: present
+
+        - name: Install rig
+          community.general.homebrew_cask:
+            name: rig
+            state: present
 
     # TODO: check if requested version of R already exists
     #   rig list --json
