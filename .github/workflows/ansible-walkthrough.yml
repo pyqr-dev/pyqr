@@ -1,0 +1,53 @@
+name: Ansible - Walkthrough
+
+on:
+  push:
+    branches: ['main']
+  pull_request:
+    branches: ['main']
+    # macOS runtimes can be long: restrict to changes in ansible files
+    paths: ['ansible-tasks/**.yml']
+
+jobs:
+  ansible:
+    runs-on: ${{ matrix.os }}
+
+    name: ${{ matrix.os }} 
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Ansible
+        run: |
+          if [ ${{ runner.os }} == "Linux" ]; then
+            sudo apt update
+            sudo apt install software-properties-common
+            sudo add-apt-repository --yes --update ppa:ansible/ansible
+            sudo apt install ansible
+          elif [ ${{ runner.os }} == "macOS" ]; then
+            brew update
+            brew install ansible
+          else
+            echo "${{ runner.os }} not supported"
+            exit 1
+          fi
+        shell: bash 
+
+      - name: Install tools
+        run: |
+          ansible-playbook local.yml --tags "R, python, quarto" -e "ansible_become_password=''"
+        shell: bash 
+
+      - name: Check installation
+        run: |
+          source ~/.profile
+          pyenv versions
+          quarto check
+        shell: bash     
