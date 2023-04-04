@@ -40,7 +40,7 @@ jobs:
 
       - name: Install tools
         run: |
-          ansible-playbook local.yml -K --tags [R, python, quarto] 
+          sudo ansible-playbook local.yml --tags [R, python, quarto] 
         shell: bash 
 
       - name: Check installation
