@@ -18,6 +18,10 @@ jobs:
         os: [ubuntu-latest, macos-latest]
 
     steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       - name: Install Ansible
         run: |
           if [ ${{ runner.os }} == "Linux" ]; then
@@ -32,4 +36,14 @@ jobs:
             echo "${{ runner.os }} not supported"
             exit 1
           fi
+        shell: bash 
+
+      - name: Install tools
+        run: |
+          ansible-playbook local.yml -K --tags [R, python, quarto] 
+        shell: bash 
+
+      - name: Check installation
+        run: |
+          quarto check
         shell: bash    
