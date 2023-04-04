@@ -11,14 +11,14 @@ RUN apt-get update \
   zsh \
   stow
 
-# ohmyzsh ref: https://ohmyz.sh/#install
-RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
 # cleanup 
 RUN apt-get clean \
   && rm -rf /var/lib/apt/lists/* 
 
 # return to default user
 USER docker
+
+# ohmyzsh ref: https://ohmyz.sh/#install
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 CMD ["zsh"]
