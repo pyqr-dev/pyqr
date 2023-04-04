@@ -93,20 +93,20 @@
               - tcl-tk
             state: present
 
-    - name: Intstall Python 
+    - name: Install Python 
       become: false
       vars:
         python_version: 3.11.2 
       block:      
         - name: Install Python
           shell: |
-            pyenv install -s {{ python_version }}
+            ~/.pyenv/bin/pyenv install -s {{ python_version }}
           args:
             executable: /bin/bash
 
         - name: Set default version of Python
           shell: |
-            pyenv global {{ python_version }}
+            ~/.pyenv/bin/pyenv global {{ python_version }}
           args:
             executable: /bin/bash
 
