@@ -15,19 +15,18 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-latest, ubuntu-latest]
+        os: [ubuntu-latest, macos-latest]
 
     steps:
       - name: Install Ansible
         run: |
           if [ ${{ runner.os }} == "Linux" ]; then
-            apt update
-            apt install software-properties-common
-            add-apt-repository --yes --update ppa:ansible/ansible
-            apt install ansible
+            sudo apt update
+            sudo apt install software-properties-common
+            sudo add-apt-repository --yes --update ppa:ansible/ansible
+            sudo apt install ansible
           elif [ ${{ runner.os }} == "macOS" ]; then
             brew update
-            brew upgrade
             brew install ansible
           else
             echo "${{ runner.os }} not supported"
