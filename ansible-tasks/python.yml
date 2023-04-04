@@ -95,19 +95,19 @@
 
     - name: Install Python 
       become: false
+      environment:
+        PATH: "$HOME/.pyenv/bin:{{ ansible_env.PATH }}"
       vars:
         python_version: 3.11.2 
       block:      
         - name: Install Python
           shell: |
-            {{ pyenv_config }}
             pyenv install -s {{ python_version }}
           args:
             executable: /bin/bash
 
         - name: Set default version of Python
           shell: |
-            {{ pyenv_config }}
             pyenv global {{ python_version }}
           args:
             executable: /bin/bash
