@@ -5,6 +5,8 @@ on:
     branches: ['main']
   pull_request:
     branches: ['main']
+    # macOS runtimes can be long: restrict to changes in ansible files
+    paths: ['ansible-tasks/**.yml']
 
 jobs:
   ansible:
