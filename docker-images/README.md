@@ -51,15 +51,22 @@ ENV R_PKG_SYSREQS2=true
 
 ### `active`
 
-Not yet built.
-This is designed for interactive development; it will include zsh, oh-my-zsh, ansible, stow, ...
+This is designed for interactive development. 
+It includes:
+
+ - [zsh](https://www.zsh.org/)
+ - [oh-my-zsh](https://ohmyz.sh/)
+ - [Ansible](https://www.ansible.com/)
+ - [GNU Stow](https://www.gnu.org/software/stow/)
+
+ This can support keeping a set of "public" dotfiles and an encrypted set of "secret" dotfiles containing tokens, etc., using [Ansible Vault](https://docs.ansible.com/ansible/2.8/user_guide/vault.html#).
 
 ## Building
 
-For example, from `docker-images/batch`:
+For example, from `docker-images/active`:
 
 ```bash
-docker buildx build . --tag local/pyqr-batch:edge-jammy --build-arg IMAGE_VERSION=edge-jammy
+docker buildx build . --tag local/pyqr-active:edge-jammy --build-arg IMAGE_VERSION=edge-jammy
 ```
 
 ## Usage
@@ -67,24 +74,24 @@ docker buildx build . --tag local/pyqr-batch:edge-jammy --build-arg IMAGE_VERSIO
 TODO: note [MacOS M1/M2 emulation challenge](https://github.com/docker/roadmap/issues/384), i.e. `amd64` vs. `arm64`.
 
 ```bash
-docker run -it local/pyqr-batch:edge-jammy
+docker run -it local/pyqr-active:edge-jammy
 ```
 
 If you want to run as root, perhaps to install additional software:
 
 ```bash
-docker run -it --user root local/pyqr-batch:edge-jammy
+docker run -it --user root local/pyqr-active:edge-jammy
 ```
 
 ### Remote
 
 ```bash
-docker pull ghcr.io/ijlyttle/pyqr-base:edge-jammy
-docker tag ghcr.io/ijlyttle/pyqr-base:edge-jammy pyqr-base:edge-jammy
+docker pull ghcr.io/ijlyttle/pyqr-active:edge-jammy
+docker tag ghcr.io/ijlyttle/pyqr-active:edge-jammy pyqr-active:edge-jammy
 ```
 
 ```bash
-docker run -it --user root pyqr-base:edge-jammy
+docker run -it --user root pyqr-active:edge-jammy
 ```
 
 ## Acknowledgements

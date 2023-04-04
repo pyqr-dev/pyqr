@@ -5,11 +5,14 @@ FROM ${IMAGE_REPO}/pyqr-batch:${IMAGE_VERSION}
 # need to install as root
 USER root 
 
-# zsh, stow
+# ansible, zsh, stow
 RUN apt-get update \
+  && add-apt-repository --yes --update ppa:ansible/ansible \
   && apt-get install -y \
+  software-properties-common \
+  ansible \
   zsh \
-  stow
+  stow 
 
 # cleanup 
 RUN apt-get clean \
