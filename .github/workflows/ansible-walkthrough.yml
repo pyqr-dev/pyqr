@@ -55,14 +55,20 @@ jobs:
           echo "PYTHON_CONFIGURE_OPTS=--enable-shared" >> $GITHUB_ENV
         shell: bash
 
-      - name: Check installation
+      - name: Check data tools
         run: |
-          echo $PATH
+          rig list
           pyenv versions
           quarto check
         shell: bash     
 
       - name: Install development tools
         run: |
-          ansible-playbook local.yml --tags "gh" -e "ansible_become_password=''"
+          ansible-playbook local.yml --tags "gh, zsh" -e "ansible_become_password=''"
         shell: bash 
+
+      - name: Check development tools
+        run: |
+          gh --version
+          zsh --version
+        shell: bash    

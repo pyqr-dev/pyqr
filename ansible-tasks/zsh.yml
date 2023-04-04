@@ -1,0 +1,11 @@
+- name: Install zsh
+  tags: zsh
+  block:
+    - name: Install zsh - Ubuntu
+      when: ansible_facts['distribution'] == "Ubuntu" 
+      become: true
+      apt:
+        name: 
+          - zsh
+
+    # zsh comes standard with macOS      
