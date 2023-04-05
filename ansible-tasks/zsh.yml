@@ -31,6 +31,6 @@
     - name: Change default shell to zsh
       become: true
       shell: |
-        chsh -s {{ zsh_path_homebrew.stdout }} {{ ansible_env.USER }}
+        chsh -s $(which zsh) {{ ansible_env.USER }}
       args:
         executable: /bin/bash
