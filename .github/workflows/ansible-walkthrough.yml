@@ -26,12 +26,12 @@ jobs:
 
       - name: Install Ansible
         run: |
-          if [ ${{ runner.os }} == "Linux" ]; then
+          if [ "${{ runner.os }}" == "Linux" ]; then
             sudo apt update
             sudo apt install software-properties-common
             sudo add-apt-repository --yes --update ppa:ansible/ansible
             sudo apt install ansible
-          elif [ ${{ runner.os }} == "macOS" ]; then
+          elif [ "${{ runner.os }}" == "macOS" ]; then
             brew update
             brew install ansible
           else
@@ -69,15 +69,15 @@ jobs:
 
       - name: Check default shell
         run: |
-          if [ ${{ runner.os }} == "Linux" ]; then
+          if [ "${{ runner.os }}" == "Linux" ]; then
             grep "^${{ env.USER }}" /etc/passwd
-          elif [ ${{ runner.os }} == "macOS" ]; then
+          elif [ "${{ runner.os }}" == "macOS" ]; then
             dscl . -read ~/ UserShell
           else
             echo "${{ runner.os }} not supported"
             exit 1
           fi          
-        shell: zsh
+        shell: bash
 
       - name: Check development tools
         run: |
