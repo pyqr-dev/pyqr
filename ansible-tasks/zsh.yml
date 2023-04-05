@@ -16,17 +16,21 @@
           community.general.homebrew:
             name: zsh
             state: present
-        
-        - name: Add to homebrew zsh to list of shells
-          become: true
+
+        - name: Get path to homebrew zsh
           shell: |
-            echo "$(which zsh)" >> /etc/shells
-          args: 
-            executable: /bin/bash
+            echo $(which zsh) 
+          register: zsh_path_homebrew
+
+        - name: Ensure homebrew zsh in list of shells
+          become: true
+          ansible.builtin.lineinfile:
+            path: /etc/shells
+            line: "{{ zsh_path_homebrew.stdout }}"
 
     - name: Change default shell to zsh
       become: true
       shell: |
-        chsh -s $(which zsh) 
+        chsh -s {{ zsh_path_homebrew.stdout }} {{ ansible_env.USER }}
       args:
         executable: /bin/bash

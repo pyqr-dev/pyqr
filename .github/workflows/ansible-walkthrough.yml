@@ -70,14 +70,14 @@ jobs:
       - name: Check default shell
         run: |
           if [ ${{ runner.os }} == "Linux" ]; then
-            grep "^{{ env.USER }}" /etc/passwd
+            grep "^${{ env.USER }}" /etc/passwd
           elif [ ${{ runner.os }} == "macOS" ]; then
             dscl . -read ~/ UserShell
           else
             echo "${{ runner.os }} not supported"
             exit 1
           fi          
-        shell: bash
+        shell: zsh
 
       - name: Check development tools
         run: |
