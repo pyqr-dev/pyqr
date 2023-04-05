@@ -8,16 +8,25 @@
         name: 
           - zsh
 
-    - name: Install zsh - MacOS (homebrew)
+    - name: Install zsh - MacOS 
       when: ansible_facts['os_family'] == "Darwin"
-      become: false
-      community.general.homebrew:
-        name: zsh
-        state: present
+      block:
+        - name: Install zsh from homebrew - MacOS
+          become: false
+          community.general.homebrew:
+            name: zsh
+            state: present
+        
+        - name: Add to homebrew zsh to list of shells
+          become: true
+          shell: |
+            echo "$(which zsh)" >> /etc/shells
+          args: 
+            executable: /bin/bash
 
     - name: Change default shell to zsh
       become: true
       shell: |
-        chsh -s `which zsh`
+        chsh -s $(which zsh) 
       args:
         executable: /bin/bash
