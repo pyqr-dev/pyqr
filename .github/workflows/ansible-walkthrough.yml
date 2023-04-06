@@ -64,7 +64,7 @@ jobs:
 
       - name: Install development tools
         run: |
-          ansible-playbook local.yml --tags "gh, zsh" -e "ansible_become_password=''"
+          ansible-playbook local.yml --tags "zsh, ohmyzsh, gh" -e "ansible_become_password=''"
         shell: bash 
 
       - name: Check default shell
