@@ -12,10 +12,10 @@
       ansible.builtin.get_url:
         url: "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
         dest: "{{ install_tempfile.path }}"
+        mode: "guo+x"
 
     - name: Install ohmyzsh
       shell: |
-        chmod guo+x {{ install_tempfile.path }}
         {{ install_tempfile.path }}
       args:
         executable: /bin/sh
@@ -24,4 +24,11 @@
       ansible.builtin.file:
         path: "{{ install_tempfile.path }}"
         state: absent
-      when: install_tempfile.path is defined    
+      when: install_tempfile.path is defined
+
+- name: Install zsh-autocomplete
+  tags: ohmyzsh, zshauto
+  become: false
+  ansible.builtin.git: 
+    repo: "https://github.com/zsh-users/zsh-autosuggestions.git"
+    dest: "~/.oh-my-zsh/custom/plugins/zsh-autosuggestions"

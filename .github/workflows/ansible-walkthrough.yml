@@ -79,9 +79,10 @@ jobs:
           fi          
         shell: bash
 
-      - name: Check ohmyzsh
+      - name: Check oh-my-zsh
         run: |
           ls -l ~/.oh-my-zsh
+          ls -l ~/.oh-my-zsh/custom/plugins
         shell: bash
 
       - name: Check development tools
