@@ -1,0 +1,16 @@
+- name: Install Stow
+  tags: stow
+  block:
+    - name: Install gh - Ubuntu
+      when: ansible_facts['distribution'] == "Ubuntu"
+      become: true
+      apt:
+        name: 
+          - stow
+
+    - name: Install stow - MacOS
+      when: ansible_facts['os_family'] == "Darwin"
+      become: false
+      community.general.homebrew:
+        name: stow
+        state: present

@@ -1,0 +1,36 @@
+- name: Install zsh
+  tags: zsh
+  block:
+    - name: Install zsh - Ubuntu
+      when: ansible_facts['distribution'] == "Ubuntu" 
+      become: true
+      apt:
+        name: 
+          - zsh
+
+    - name: Install zsh - MacOS 
+      when: ansible_facts['os_family'] == "Darwin"
+      block:
+        - name: Install zsh from homebrew - MacOS
+          become: false
+          community.general.homebrew:
+            name: zsh
+            state: present
+
+        - name: Get path to homebrew zsh
+          shell: |
+            echo $(which zsh) 
+          register: zsh_path_homebrew
+
+        - name: Ensure homebrew zsh in list of shells
+          become: true
+          ansible.builtin.lineinfile:
+            path: /etc/shells
+            line: "{{ zsh_path_homebrew.stdout }}"
+
+    - name: Change default shell to zsh
+      become: true
+      shell: |
+        chsh -s $(which zsh) {{ ansible_env.USER }}
+      args:
+        executable: /bin/bash
