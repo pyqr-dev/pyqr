@@ -14,7 +14,7 @@
         dest: "{{ install_tempfile.path }}"
 
     - name: Install ohmyzsh
-      shell: {{ install_tempfile.path }}
+      shell: "{{ install_tempfile.path }}"
       args:
         executable: /bin/sh
 
