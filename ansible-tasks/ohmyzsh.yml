@@ -1,6 +1,7 @@
 - name: Install ohmyzsh
   tags: ohmyzsh
   become: false
+  # ref: beginning of https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
   block:
     - name: Create temporary file
       ansible.builtin.tempfile:
@@ -26,6 +27,7 @@
         state: absent
       when: install_tempfile.path is defined
 
+  # ref: https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md#oh-my-zsh
 - name: Install zsh-autosuggestions
   tags: ohmyzsh, zshauto
   become: false

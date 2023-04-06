@@ -57,12 +57,17 @@ Change to the directory, then:
 
 ```bash
 # using example tags
-ansible-playbook local.yml -K --tags [R, python, quarto] 
+ansible-playbook local.yml -K --tags "R, python, quarto"
 ```
 
 ### Remotely
 
 ```bash
 # using example tags
-ansible-pull https://github.com/ijlyttle/pyqr.git -K --tags [R, python, quarto] 
+ansible-pull https://github.com/ijlyttle/pyqr.git -K --tags "R, python, quarto"
 ```
+
+To install the data stack, use the tags `"R, python, quarto"`.
+
+To install the developer stack, use the tags `"zsh, ohmyzsh, gh, stow"`.
+
