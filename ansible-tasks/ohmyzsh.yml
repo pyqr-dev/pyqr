@@ -1,2 +1,25 @@
 - name: Install ohmyzsh
   tags: ohmyzsh
+  become: false
+  block:
+    - name: Create temporary file
+      ansible.builtin.tempfile:
+        state: file
+        suffix: .sh
+      register: install_tempfile
+
+    - name: Download ohmyzsh
+      ansible.builtin.get_url:
+        url: "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
+        dest: "{{ install_tempfile.path }}"
+
+    - name: Install ohmyzsh
+      shell: {{ install_tempfile.path }}
+      args:
+        executable: /bin/sh
+
+    - name: Delete temporary file
+      ansible.builtin.file:
+        path: "{{ install_tempfile.path }}"
+        state: absent
+      when: install_tempfile.path is defined    

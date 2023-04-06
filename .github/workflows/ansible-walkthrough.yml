@@ -70,13 +70,18 @@ jobs:
       - name: Check default shell
         run: |
           if [ "${{ runner.os }}" == "Linux" ]; then
-            grep "^${{ env.USER }}" /etc/passwd
+            grep "^$(whoami)" /etc/passwd
           elif [ "${{ runner.os }}" == "macOS" ]; then
             dscl . -read ~/ UserShell
           else
             echo "${{ runner.os }} not supported"
             exit 1
           fi          
+        shell: bash
+
+      - name: Check ohmyzsh
+        run: |
+          ls -l ~/.oh-my-zsh
         shell: bash
 
       - name: Check development tools
