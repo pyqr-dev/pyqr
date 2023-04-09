@@ -50,7 +50,7 @@ There are two ways you can run, locally or remotely.
 If you want to run locally, install locally: 
 
 ```bash
-git clone https://github.com/ijlyttle/pyqr.git
+git clone https://github.com/pyqr-dev/pyqr.git
 ```
 
 Change to the directory, then:
@@ -64,7 +64,7 @@ ansible-playbook local.yml -K --tags "R, python, quarto"
 
 ```bash
 # using example tags
-ansible-pull https://github.com/ijlyttle/pyqr.git -K --tags "R, python, quarto"
+ansible-pull https://github.com/pyqr-dev/pyqr.git -K --tags "R, python, quarto"
 ```
 
 To install the data stack, use the tags `"R, python, quarto"`.

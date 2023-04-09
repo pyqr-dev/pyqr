@@ -1,4 +1,4 @@
-ARG IMAGE_REPO=ghcr.io/ijlyttle
+ARG IMAGE_REPO=ghcr.io/pyqr-dev
 ARG IMAGE_VERSION=edge-jammy
 FROM ${IMAGE_REPO}/pyqr-batch:${IMAGE_VERSION}
 

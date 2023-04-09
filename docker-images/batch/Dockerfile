@@ -1,4 +1,4 @@
-ARG IMAGE_REPO=ghcr.io/ijlyttle
+ARG IMAGE_REPO=ghcr.io/pyqr-dev
 ARG IMAGE_VERSION=edge-jammy
 FROM ${IMAGE_REPO}/pyqr-base:${IMAGE_VERSION}
 
@@ -36,7 +36,7 @@ ENV R_PKG_SYSREQS2=true
 ARG QUARTO_VERSION=pre_release
 
 # install Quarto
-# ref: https://github.com/ijlyttle/quig
+# ref: https://github.com/pyqr-dev/quig
 RUN quig add ${QUARTO_VERSION}
 
 # return to default user

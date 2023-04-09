@@ -16,7 +16,7 @@ I want to make it easier for you to combine:
 
 - any version of Python, using [pyenv](https://github.com/pyenv/pyenv)
 - any version of R, using [rig](https://github.com/r-lib/rig)
-- any version of Quarto using [quig](https://github.com/ijlyttle/quig)
+- any version of Quarto using [quig](https://github.com/pyqr-dev/quig)
 
 Further, I want to make it easier to manage a set of dotfiles that you can deploy to a pyqr instance you might create.
 

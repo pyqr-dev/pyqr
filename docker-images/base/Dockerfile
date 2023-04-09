@@ -1,8 +1,8 @@
 ARG DIST=jammy
 FROM ubuntu:${DIST}
 
-LABEL org.opencontainers.image.source "https://github.com/ijlyttle/pyqr" 
-LABEL org.opencontainers.image.authors "Ian Lyttle <ijlyttle@me.com>" 
+LABEL org.opencontainers.image.source "https://github.com/pyqr-dev/pyqr" 
+LABEL org.opencontainers.image.authors "Ian Lyttle <pyqr-dev@me.com>" 
 LABEL org.opencontainers.image.description "Foundation for GitHub Actions runner to install Python/Quarto/R"
 LABEL org.opencontainers.image.licenses "MIT"
 
@@ -72,8 +72,8 @@ RUN ARCH="$(arch)"; \
   curl -Ls https://github.com/r-lib/rig/releases/download/latest/rig-linux${ARM64}-latest.tar.gz | tar xz -C /usr/local
 
 # install quig
-# ref: https://github.com/ijlyttle/quig
-RUN curl -Ls https://github.com/ijlyttle/quig/releases/latest/download/quig.tar.gz | tar xz -C /opt \
+# ref: https://github.com/pyqr-dev/quig
+RUN curl -Ls https://github.com/pyqr-dev/quig/releases/latest/download/quig.tar.gz | tar xz -C /opt \
   && ln -sf /opt/quig/bin/quig /usr/local/bin/quig
 
 # cleanup (normally last, but installing pyenv as docker user)

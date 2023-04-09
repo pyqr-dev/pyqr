@@ -27,7 +27,7 @@ jobs:
   <name-of-job>:
     runs-on: <name-of-runner>
     container:
-      image: ghcr.io/ijlyttle/pyqr-base:edge-jammy
+      image: ghcr.io/pyqr-dev/pyqr-base:edge-jammy
 ```
 
 These environment variables are set for `base`:
@@ -86,8 +86,8 @@ docker run -it --user root local/pyqr-active:edge-jammy
 ### Remote
 
 ```bash
-docker pull ghcr.io/ijlyttle/pyqr-active:edge-jammy
-docker tag ghcr.io/ijlyttle/pyqr-active:edge-jammy pyqr-active:edge-jammy
+docker pull ghcr.io/pyqr-dev/pyqr-active:edge-jammy
+docker tag ghcr.io/pyqr-dev/pyqr-active:edge-jammy pyqr-active:edge-jammy
 ```
 
 ```bash
