@@ -34,6 +34,8 @@ jobs:
           elif [ "${{ runner.os }}" == "macOS" ]; then
             brew update
             brew install ansible
+            # workaround ref: https://github.com/actions/setup-python/issues/577#issuecomment-1500828576
+            rm /usr/local/bin/2to3 || true
           else
             echo "${{ runner.os }} not supported"
             exit 1
