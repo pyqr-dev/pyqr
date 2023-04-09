@@ -35,6 +35,7 @@ jobs:
             # workaround ref: https://github.com/actions/setup-python/issues/577#issuecomment-1500828576
             rm /usr/local/bin/2to3 || true
             rm /usr/local/bin/2to3-3.11 || true
+            rm /usr/local/bin/idle3 || true
 
             brew update
             brew install ansible
