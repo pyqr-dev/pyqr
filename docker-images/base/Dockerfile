@@ -2,7 +2,7 @@ ARG DIST=jammy
 FROM ubuntu:${DIST}
 
 LABEL org.opencontainers.image.source "https://github.com/pyqr-dev/pyqr" 
-LABEL org.opencontainers.image.authors "Ian Lyttle <pyqr-dev@me.com>" 
+LABEL org.opencontainers.image.authors "Ian Lyttle <ijlyttle@me.com>" 
 LABEL org.opencontainers.image.description "Foundation for GitHub Actions runner to install Python/Quarto/R"
 LABEL org.opencontainers.image.licenses "MIT"
 
