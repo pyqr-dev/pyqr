@@ -1,7 +1,7 @@
 - name: Install dotfiles
   vars:
     dot_host: "github.com"
-    dot_user: "pyqr"
+    dot_user: "pyqr-dev"
     dot_repo: ".dotfiles"
     dot_packages: "*/"
   tags: dotfiles
