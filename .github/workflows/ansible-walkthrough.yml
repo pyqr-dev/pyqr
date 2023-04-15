@@ -121,6 +121,15 @@ jobs:
           ansible-playbook local.yml --tags "dotfiles" -e "dot_repo='.dotfiles-secret' ansible_become_password=''"
         shell: bash
 
+      - name: Decrypt dotfiles-secret
+        # note: there are no *actual* secrets here, and the password is public
+        #       you would not do this with a "real" .dotfiles-secret
+        run: |
+          cd ~/.dotfiles-secret
+          echo secret > password.txt
+          ./decrypt.sh ./password.txt
+        shell: bash
+
       - name: Check dotfiles secret
         run: |
           ls -l ~/.dotfiles-secret
