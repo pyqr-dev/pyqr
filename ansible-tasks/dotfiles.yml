@@ -11,3 +11,12 @@
       ansible.builtin.git:
         repo: "https://{{ dot_host }}/{{ dot_user }}/{{ dot_repo }}.git"
         dest: "~/{{ dot_repo }}"
+
+    - name: Stow dotfiles
+      shell: |
+        stow --adopt {{ item }}
+        git restore .
+      chdir: "~/{{ dot_repo }}"      
+      args:
+        executable: /bin/bash
+      loop: "{{ lookup('vars', 'dot_packages') }}"     

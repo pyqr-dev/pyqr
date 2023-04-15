@@ -111,4 +111,7 @@ jobs:
       - name: Check dotfiles
         run: |
           ls -l ~/.dotfiles
+          ls -l ~/.zshrc
+          ls -l ~/.gitconfig
+          ls -l ~/.Rprofile
         shell: bash
