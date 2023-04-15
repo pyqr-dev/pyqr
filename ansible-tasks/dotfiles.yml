@@ -13,10 +13,10 @@
         dest: "~/{{ dot_repo }}"
 
     - name: Stow dotfiles
-      shell: |
+      ansible.builtin.shell: |
         stow --adopt {{ item }}
-        git restore .
-      chdir: "~/{{ dot_repo }}"      
+        git restore .  
       args:
+        chdir: "~/{{ dot_repo }}"    
         executable: /bin/bash
       loop: "{{ lookup('vars', 'dot_packages') }}"     
