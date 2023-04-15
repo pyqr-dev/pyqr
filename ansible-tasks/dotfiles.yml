@@ -8,5 +8,6 @@
   block:
 
     - name: Clone repo
-      repo: "https://{{ dot_host }}/{{ dot_user }}/{{ dot_repo }}.git"
-      dest: "~/{{ dot_repo }}"
+      ansible.builtin.git:
+        repo: "https://{{ dot_host }}/{{ dot_user }}/{{ dot_repo }}.git"
+        dest: "~/{{ dot_repo }}"
