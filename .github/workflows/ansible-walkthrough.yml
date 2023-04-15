@@ -102,3 +102,13 @@ jobs:
           gh --version
           stow --version
         shell: bash    
+
+      - name: Install dotfiles        
+        run: |
+          ansible-playbook local.yml --tags "dotfiles" -e "ansible_become_password=''"
+        shell: bash
+
+      - name: Check dotfiles
+        run: |
+          ls -l ~/.dotfiles
+        shell: bash

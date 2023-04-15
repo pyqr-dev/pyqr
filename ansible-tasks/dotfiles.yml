@@ -1,0 +1,12 @@
+- name: Install dotfiles
+  vars:
+    dot_host: "github.com"
+    dot_user: "pyqr"
+    dot_repo: ".dotfiles"
+    dot_packages: "*/"
+  tags: dotfiles
+  block:
+
+    - name: Clone repo
+      repo: "https://{{ dot_host }}/{{ dot_user }}/{{ dot_repo }}.git"
+      dest: "~/{{ dot_repo }}"
