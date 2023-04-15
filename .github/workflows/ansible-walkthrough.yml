@@ -124,5 +124,5 @@ jobs:
       - name: Check dotfiles secret
         run: |
           ls -l ~/.dotfiles-secret
-          cat ~/.zshev-secret
+          cat ~/.zshenv-secret
         shell: bash
