@@ -115,3 +115,14 @@ jobs:
           ls -l ~/.gitconfig
           ls -l ~/.Rprofile
         shell: bash
+
+      - name: Install dotfiles-secret        
+        run: |
+          ansible-playbook local.yml --tags "dotfiles" -e "dot_repo='.dotfiles-secret' ansible_become_password=''"
+        shell: bash
+
+      - name: Check dotfiles secret
+        run: |
+          ls -l ~/.dotfiles-secret
+          cat ~/.zshev-secret
+        shell: bash
