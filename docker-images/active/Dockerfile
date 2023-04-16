@@ -18,7 +18,7 @@ RUN apt-get install -y software-properties-common \
 
 # neovim
 RUN add-apt-repository --yes --update ppa:neovim-ppa/stable \
-  && apt-get install neovim
+  && apt-get install -y neovim
 
 # cleanup 
 RUN apt-get clean \
