@@ -9,16 +9,13 @@ USER root
 RUN apt-get update \
   && apt-get install -y \
   zsh \
-  stow 
+  stow \
+  vim
 
 # ansible
 RUN apt-get install -y software-properties-common \
   && add-apt-repository --yes --update ppa:ansible/ansible \
   && apt-get install -y ansible
-
-# neovim
-RUN add-apt-repository --yes --update ppa:neovim-ppa/stable \
-  && apt-get install -y neovim
 
 # cleanup 
 RUN apt-get clean \
