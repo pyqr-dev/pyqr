@@ -29,7 +29,7 @@
 
   # ref: https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md#oh-my-zsh
 - name: Install zsh-autosuggestions
-  tags: ohmyzsh, zshauto
+  tags: zshauto, ohmyzsh, dev 
   become: false
   ansible.builtin.git: 
     repo: "https://github.com/zsh-users/zsh-autosuggestions.git"
