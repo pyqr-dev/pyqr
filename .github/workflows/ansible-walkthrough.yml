@@ -69,6 +69,7 @@ jobs:
 
       - name: Check data tools
         run: |
+          jq --version
           rig list
           pyenv versions
           quarto check
@@ -99,6 +100,7 @@ jobs:
 
       - name: Check development tools
         run: |
+          jq --version
           gh --version
           vim --version | head -n1
         shell: bash    

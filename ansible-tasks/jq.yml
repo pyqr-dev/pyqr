@@ -1,0 +1,16 @@
+- name: Install jq
+  tags: jq, data, dev
+  block:
+    - name: Install jq - Ubuntu
+      when: ansible_facts['distribution'] == "Ubuntu"
+      become: true
+      apt:
+        name: 
+          - jq
+
+    - name: Install jq - MacOS
+      when: ansible_facts['os_family'] == "Darwin"
+      become: false
+      community.general.homebrew:
+        name: jq
+        state: present

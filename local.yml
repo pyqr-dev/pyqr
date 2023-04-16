@@ -32,6 +32,7 @@
             update_homebrew: true
 
   tasks:
+    - import_tasks: ansible-tasks/jq.yml
     - import_tasks: ansible-tasks/python.yml
     - import_tasks: ansible-tasks/quarto.yml
     - import_tasks: ansible-tasks/R.yml
