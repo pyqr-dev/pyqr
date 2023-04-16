@@ -1,5 +1,5 @@
 - name: Install zsh
-  tags: zsh
+  tags: zsh, dev
   block:
     - name: Install zsh - Ubuntu
       when: ansible_facts['distribution'] == "Ubuntu" 

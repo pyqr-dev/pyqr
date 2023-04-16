@@ -54,7 +54,7 @@ jobs:
 
       - name: Install data tools
         run: |
-          ansible-playbook local.yml --tags "R, python, quarto" -e "ansible_become_password=''"
+          ansible-playbook local.yml --tags "data" -e "ansible_become_password=''"
         shell: bash 
 
       - name: Establish pyenv
@@ -76,7 +76,7 @@ jobs:
 
       - name: Install development tools
         run: |
-          ansible-playbook local.yml --tags "zsh, ohmyzsh, gh, stow, vim" -e "ansible_become_password=''"
+          ansible-playbook local.yml --tags "dev" -e "ansible_become_password=''"
         shell: bash 
 
       - name: Check default shell
@@ -100,7 +100,6 @@ jobs:
       - name: Check development tools
         run: |
           gh --version
-          stow --version
           vim --version | head -n1
         shell: bash    
 
@@ -111,6 +110,7 @@ jobs:
 
       - name: Check dotfiles
         run: |
+          stow --version
           ls -l ~/.dotfiles
           ls -l ~/.zshrc
           ls -l ~/.gitconfig

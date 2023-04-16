@@ -1,5 +1,5 @@
 - name: Install GitHub CLI
-  tags: gh
+  tags: gh, dev
   block:
     - name: Install gh - Ubuntu
       when: ansible_facts['distribution'] == "Ubuntu"

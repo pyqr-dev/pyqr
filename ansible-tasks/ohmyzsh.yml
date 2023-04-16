@@ -1,5 +1,5 @@
 - name: Install ohmyzsh
-  tags: ohmyzsh
+  tags: ohmyzsh, dev
   become: false
   # ref: beginning of https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
   block:

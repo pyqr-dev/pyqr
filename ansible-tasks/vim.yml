@@ -1,5 +1,5 @@
 - name: Install vim
-  tags: vim
+  tags: vim, dev
   block:
     - name: Install vim - Ubuntu
       when: ansible_facts['distribution'] == "Ubuntu"
