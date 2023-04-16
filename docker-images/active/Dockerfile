@@ -16,6 +16,10 @@ RUN apt-get install -y software-properties-common \
   && add-apt-repository --yes --update ppa:ansible/ansible \
   && apt-get install -y ansible
 
+# neovim
+RUN add-apt-repository --yes --update ppa:neovim-ppa/stable \
+  && apt-get install neovim
+
 # cleanup 
 RUN apt-get clean \
   && rm -rf /var/lib/apt/lists/* 
