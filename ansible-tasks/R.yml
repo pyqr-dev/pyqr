@@ -1,6 +1,6 @@
   # ref: https://github.com/r-lib/rig
 - name: Install R using rig
-  tags: R
+  tags: R, data
   block:
     - name: Install rig (R installer) - Ubuntu
       when: ansible_facts['distribution'] == "Ubuntu" 

@@ -54,7 +54,7 @@ jobs:
 
       - name: Install data tools
         run: |
-          ansible-playbook local.yml --tags "R, python, quarto" -e "ansible_become_password=''"
+          ansible-playbook local.yml --tags "data" -e "ansible_become_password=''"
         shell: bash 
 
       - name: Establish pyenv

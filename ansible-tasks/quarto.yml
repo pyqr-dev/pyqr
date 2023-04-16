@@ -1,5 +1,5 @@
 - name: Install quarto using quig
-  tags: quarto
+  tags: quarto, data
   become: true
   block:
       # ref: https://github.com/pyqr-dev/quig

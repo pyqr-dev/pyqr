@@ -1,5 +1,5 @@
 - name: Install python using pyenv
-  tags: python
+  tags: python, data
   vars:
     # using `--enable-shared` to support reticulate: 
     #   https://rstudio.github.io/reticulate/articles/versions.html#locating-python
