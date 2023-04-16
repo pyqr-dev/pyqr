@@ -76,7 +76,7 @@ jobs:
 
       - name: Install development tools
         run: |
-          ansible-playbook local.yml --tags "zsh, ohmyzsh, gh, stow" -e "ansible_become_password=''"
+          ansible-playbook local.yml --tags "zsh, ohmyzsh, gh, stow, vim" -e "ansible_become_password=''"
         shell: bash 
 
       - name: Check default shell
@@ -101,6 +101,7 @@ jobs:
         run: |
           gh --version
           stow --version
+          vim --version | head -n1
         shell: bash    
 
       - name: Install dotfiles        

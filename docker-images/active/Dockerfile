@@ -5,7 +5,7 @@ FROM ${IMAGE_REPO}/pyqr-batch:${IMAGE_VERSION}
 # need to install as root
 USER root 
 
-# zsh, stow
+# zsh, stow, vim
 RUN apt-get update \
   && apt-get install -y \
   zsh \
