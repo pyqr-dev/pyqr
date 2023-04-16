@@ -39,3 +39,5 @@
     - import_tasks: ansible-tasks/zsh.yml
     - import_tasks: ansible-tasks/ohmyzsh.yml
     - import_tasks: ansible-tasks/stow.yml
+    - import_tasks: ansible-tasks/dotfiles.yml
+

@@ -1,0 +1,22 @@
+- name: Install dotfiles
+  vars:
+    dot_host: "github.com"
+    dot_user: "pyqr-dev"
+    dot_repo: ".dotfiles"
+    dot_packages: "*/"
+  tags: dotfiles
+  block:
+
+    - name: Clone repo
+      ansible.builtin.git:
+        repo: "https://{{ dot_host }}/{{ dot_user }}/{{ dot_repo }}.git"
+        dest: "~/{{ dot_repo }}"
+
+    - name: Stow dotfiles
+      ansible.builtin.shell: |
+        stow --adopt {{ item }}
+        git restore .  
+      args:
+        chdir: "~/{{ dot_repo }}"    
+        executable: /bin/bash
+      loop: "{{ query('vars', 'dot_packages') }}"     

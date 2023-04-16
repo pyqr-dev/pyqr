@@ -1,5 +1,5 @@
 - name: Install Stow
-  tags: stow
+  tags: stow, dotfiles
   block:
     - name: Install gh - Ubuntu
       when: ansible_facts['distribution'] == "Ubuntu"
