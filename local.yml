@@ -4,6 +4,7 @@
       tags: always
       when: ansible_facts['distribution'] == "Ubuntu"
       become: true
+      ignore_errors: true
       apt:
         update_cache: true
 
