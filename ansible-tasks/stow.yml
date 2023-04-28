@@ -4,6 +4,7 @@
     - name: Install stow - Ubuntu
       when: ansible_facts['distribution'] == "Ubuntu"
       become: true
+      ignore_errors: true
       apt:
         name: 
           - stow
