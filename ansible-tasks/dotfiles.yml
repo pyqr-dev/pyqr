@@ -19,4 +19,4 @@
       args:
         chdir: "~/{{ dot_repo }}"    
         executable: /bin/bash
-      loop: "{{ loopup('vars', 'dot_packages').split(',') }}"     
+      loop: "{{ lookup('vars', 'dot_packages').split(',') }}"     
