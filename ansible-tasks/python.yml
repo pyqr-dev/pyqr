@@ -12,11 +12,20 @@
       fi
   block:
     # ref: https://github.com/pyenv/pyenv-installer
+    - name: Check for pyenv directory
+      stat: 
+        path: ~/.pyenv
+      register: pyenv_directory 
+
     - name: Install pyenv
       become: false
       block:
         - name: Install pyenv - Ubuntu
-          when: ansible_facts['distribution'] == "Ubuntu" 
+          when: |
+            (
+              ansible_facts['distribution'] == "Ubuntu" and
+              not pyenv_directory.stat.exists
+            )
           vars:
             # as of 2023-02-14
             hash: f971e5d01ac2cba8be2ebe97c652506d90185807        
