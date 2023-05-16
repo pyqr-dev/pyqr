@@ -24,7 +24,7 @@
           when: |
             (
               ansible_facts['distribution'] == "Ubuntu" and
-              not pyenv_directory.stat.exists
+              not (pyenv_directory.stat is defined)
             )
           vars:
             # as of 2023-02-14

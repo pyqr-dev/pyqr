@@ -5,7 +5,7 @@
 
 - name: Install ohmyzsh
   tags: ohmyzsh, dev
-  when: not ohmyzsh_directory.stat.exists
+  when: not (ohmyzsh_directory.stat is defined)
   become: false
   # ref: beginning of https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
   block:
@@ -37,6 +37,17 @@
 - name: Install zsh-autosuggestions
   tags: zshauto, ohmyzsh, dev 
   become: false
-  ansible.builtin.git: 
-    repo: "https://github.com/zsh-users/zsh-autosuggestions.git"
-    dest: "~/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+  vars:
+    zshauto_path: "~/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+  block:
+    
+    - name: Check for oh-my-zsh directory
+      stat: 
+        path: "{{ zshauto_path }}"
+      register: zshauto_directory 
+
+    - name: Clone zsh-autosuggestions repo
+      when: not (zshauto_directory.stat is defined)
+      ansible.builtin.git: 
+        repo: "https://github.com/zsh-users/zsh-autosuggestions.git"
+        dest: "{{ zshauto_path }}"
