@@ -1,6 +1,6 @@
 - name: Check for oh-my-zsh directory
   stat: 
-    path: ~/.oh-my-zsh
+    path: "~/.oh-my-zsh"
   register: ohmyzsh_directory 
 
 - name: Install ohmyzsh
