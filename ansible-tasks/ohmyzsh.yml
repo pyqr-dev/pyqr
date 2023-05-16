@@ -26,7 +26,7 @@
       ansible.builtin.file:
         path: "{{ install_tempfile.path }}"
         state: absent
-      when: "{{ install_tempfile.path }} is defined"
+      when: install_tempfile.path is defined
 
   # ref: https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md#oh-my-zsh
 - name: Install zsh-autosuggestions
