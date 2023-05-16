@@ -1,5 +1,11 @@
+- name: Check for oh-my-zsh directory
+  stat: 
+    path: ~/.oh-my-zsh
+  register: ohmyzsh_directory 
+
 - name: Install ohmyzsh
   tags: ohmyzsh, dev
+  when: not ohmyzsh_directory.stat.exists
   become: false
   # ref: beginning of https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
   block:
