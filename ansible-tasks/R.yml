@@ -32,5 +32,6 @@
 
     - name: Install R
       shell: rig add {{ version }}
+      become: true
       vars:
         version: 4.2
