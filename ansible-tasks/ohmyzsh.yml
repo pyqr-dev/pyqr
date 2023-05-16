@@ -13,7 +13,7 @@
     - name: Download ohmyzsh
       ansible.builtin.get_url:
         url: "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
-        dest: install_tempfile.path
+        dest: "{{ install_tempfile.path }}"
         mode: "guo+x"
 
     - name: Install ohmyzsh
@@ -24,9 +24,9 @@
 
     - name: Delete temporary file
       ansible.builtin.file:
-        path: install_tempfile.path
+        path: "{{ install_tempfile.path }}"
         state: absent
-      when: install_tempfile.path is defined
+      when: "{{ install_tempfile.path }} is defined"
 
   # ref: https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md#oh-my-zsh
 - name: Install zsh-autosuggestions
@@ -34,7 +34,7 @@
   become: false
   vars:
     zshauto_path: "~/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
-  when: not (zshauto_path is exists)
+  when: "not ({{ zshauto_path }} is exists)"
   ansible.builtin.git: 
     repo: "https://github.com/zsh-users/zsh-autosuggestions.git"
     dest: zshauto_path
