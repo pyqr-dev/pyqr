@@ -32,9 +32,8 @@
 - name: Install zsh-autosuggestions
   tags: zshauto, ohmyzsh, dev 
   become: false
-  vars:
-    zshauto_path: "~/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
-  when: "'{{ zshauto_path }}' is not exists"
+  # repeating path here to avoid jinja2 warning
+  when: "'~/.oh-my-zsh/custom/plugins/zsh-autosuggestions' is not exists"
   ansible.builtin.git: 
     repo: "https://github.com/zsh-users/zsh-autosuggestions.git"
-    dest: zshauto_path
+    dest: "~/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
