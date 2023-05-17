@@ -1,6 +1,6 @@
 - name: Install ohmyzsh
   tags: ohmyzsh, dev
-  when: "~/.oh-my-zsh is not exists"
+  when: "'~/.oh-my-zsh' is not exists"
   become: false
   # ref: beginning of https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
   block:
@@ -34,7 +34,7 @@
   become: false
   vars:
     zshauto_path: "~/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
-  when: "{{ zshauto_path }} is not exists"
+  when: "'{{ zshauto_path }}' is not exists"
   ansible.builtin.git: 
     repo: "https://github.com/zsh-users/zsh-autosuggestions.git"
     dest: zshauto_path
