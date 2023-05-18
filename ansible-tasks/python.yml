@@ -11,12 +11,13 @@
         export PYTHON_CONFIGURE_OPTS="--enable-shared"
       fi
   block:
-    # ref: https://github.com/pyenv/pyenv-installer
-    - name: Check for pyenv directory
-      stat: 
-        path: ~/.pyenv
-      register: pyenv_directory 
+    - name: Check for pyenv
+      become: false
+      stat:
+        path: "~/.pyenv"
+      register: pyenv_path
 
+    # ref: https://github.com/pyenv/pyenv-installer
     - name: Install pyenv
       become: false
       block:
@@ -24,14 +25,14 @@
           when: |
             (
               ansible_facts['distribution'] == "Ubuntu" and
-              not pyenv_directory.stat.exists
+              pyenv_path.stat.exists == false
             )
           vars:
             # as of 2023-02-14
             hash: f971e5d01ac2cba8be2ebe97c652506d90185807        
           shell: |
-              curl -L https://github.com/pyenv/pyenv-installer/raw/{{ hash }}/bin/pyenv-installer | 
-                bash
+            curl -L https://github.com/pyenv/pyenv-installer/raw/{{ hash }}/bin/pyenv-installer | 
+              bash
           args:
             executable: /bin/bash
             

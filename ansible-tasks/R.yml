@@ -10,7 +10,7 @@
         curl -Ls https://github.com/r-lib/rig/releases/download/v{{ version }}/rig-linux-{{ version }}.tar.gz |
           sudo tar xz -C /usr/local
       vars:
-        version: 0.5.2
+        version: 0.5.3
 
     - name: Install rig (R installer) - MacOS
       when: ansible_facts['os_family'] == "Darwin"
@@ -30,7 +30,10 @@
     #   rig list --json
     #   rig resolve {{ version }}
 
+    # note that this does not set the default unless it is the only version
     - name: Install R
-      shell: rig add {{ version }}
+      shell: |
+        rig add {{ version }} --without-pak
+      become: true
       vars:
-        version: 4.2
+        version: 4.3

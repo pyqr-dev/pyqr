@@ -1,36 +1,54 @@
-- name: Install ohmyzsh
+- name: ohmyzsh
   tags: ohmyzsh, dev
   become: false
-  # ref: beginning of https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
   block:
-    - name: Create temporary file
-      ansible.builtin.tempfile:
-        state: file
-        suffix: .sh
-      register: install_tempfile
-
-    - name: Download ohmyzsh
-      ansible.builtin.get_url:
-        url: "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
-        dest: "{{ install_tempfile.path }}"
-        mode: "guo+x"
+    - name: Check for ohmyzsh
+      stat:
+        path: "~/.oh-my-zsh"
+      register: ohmyzsh_path
 
     - name: Install ohmyzsh
-      shell: |
-        {{ install_tempfile.path }}
-      args:
-        executable: /bin/sh
+      when: ohmyzsh_path.stat.exists == false
+      # ref: beginning of https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+      block:
+        - name: Create temporary file
+          ansible.builtin.tempfile:
+            state: file
+            suffix: .sh
+          register: install_tempfile
 
-    - name: Delete temporary file
-      ansible.builtin.file:
-        path: "{{ install_tempfile.path }}"
-        state: absent
-      when: install_tempfile.path is defined
+        - name: Download ohmyzsh
+          ansible.builtin.get_url:
+            url: "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
+            dest: "{{ install_tempfile.path }}"
+            mode: "guo+x"
 
-  # ref: https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md#oh-my-zsh
-- name: Install zsh-autosuggestions
+        - name: Install ohmyzsh
+          shell: |
+            {{ install_tempfile.path }}
+          args:
+            executable: /bin/sh
+
+        - name: Delete temporary file
+          ansible.builtin.file:
+            path: "{{ install_tempfile.path }}"
+            state: absent
+          when: install_tempfile.path is defined
+
+- name: zsh-autosuggestions
   tags: zshauto, ohmyzsh, dev 
   become: false
-  ansible.builtin.git: 
-    repo: "https://github.com/zsh-users/zsh-autosuggestions.git"
-    dest: "~/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+  vars:
+    zshauto_dir: "~/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+  block:       
+    - name: Check for zsh-autosuggestions
+      stat:
+        path: zshauto_dir
+      register: zshauto_path
+
+      # ref: https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md#oh-my-zsh
+    - name: Install zsh-autosuggestions
+      when: zshauto_path.stat.exists == false
+      ansible.builtin.git: 
+        repo: "https://github.com/zsh-users/zsh-autosuggestions.git"
+        dest: "{{ zshauto_dir }}"
