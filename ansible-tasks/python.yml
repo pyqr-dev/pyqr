@@ -11,6 +11,16 @@
         export PYTHON_CONFIGURE_OPTS="--enable-shared"
       fi
   block:
+    - name: Check for pyenv
+      become: false
+      stat:
+        path: "~/.pyenv"
+      register: pyenv_check
+
+    - name: Display pyenv
+      debug: 
+        var: pyenv_check
+
     # ref: https://github.com/pyenv/pyenv-installer
     - name: Install pyenv
       become: false
@@ -18,7 +28,6 @@
         - name: Install pyenv - Ubuntu
           when: |
             (
-              false and
               ansible_facts['distribution'] == "Ubuntu" and
               "$HOME/.pyenv" is not exists
             )
