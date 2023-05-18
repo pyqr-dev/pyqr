@@ -19,7 +19,7 @@
           when: |
             (
               ansible_facts['distribution'] == "Ubuntu" and
-              "~/.pyenv" is not exists
+              "$HOME/.pyenv" is not exists
             )
           vars:
             # as of 2023-02-14
