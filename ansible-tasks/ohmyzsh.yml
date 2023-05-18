@@ -3,14 +3,9 @@
   become: false
   block:
     - name: Check for ohmyzsh
-      become: false
       stat:
         path: "~/.oh-my-zsh"
       register: ohmyzsh_path
-
-    - name: Debug ohmyzsh
-      debug: 
-        var: ohmyzsh_path
 
     - name: Install ohmyzsh
       when: ohmyzsh_path.stat.exists == false
@@ -53,7 +48,7 @@
 
       # ref: https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md#oh-my-zsh
     - name: Install zsh-autosuggestions
-      when: zshauto_path.stat.exists == flase
+      when: zshauto_path.stat.exists == false
       ansible.builtin.git: 
         repo: "https://github.com/zsh-users/zsh-autosuggestions.git"
         dest: zshauto_dir
