@@ -55,4 +55,4 @@
       when: zshauto_path.stat.exists == false
       ansible.builtin.git: 
         repo: "https://github.com/zsh-users/zsh-autosuggestions.git"
-        dest: zshauto_dir
+        dest: "{{ zshauto_dir }}"
