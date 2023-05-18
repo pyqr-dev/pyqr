@@ -4,6 +4,10 @@
     path: "~/.oh-my-zsh"
   register: ohmyzsh_path
 
+- name: Debug ohmyzsh
+  debug: 
+    var: ohmyzsh_path
+
 - name: Install ohmyzsh
   tags: ohmyzsh, dev
   when: ohmyzsh_path.stat.exists == false
