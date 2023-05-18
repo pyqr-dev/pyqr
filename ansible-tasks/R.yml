@@ -31,7 +31,9 @@
     #   rig resolve {{ version }}
 
     - name: Install R
-      shell: rig add {{ version }} --without-pak
+      shell: |
+        rig add {{ version }} --without-pak
+        rig default {{ version }}
       become: true
       vars:
         version: 4.3
