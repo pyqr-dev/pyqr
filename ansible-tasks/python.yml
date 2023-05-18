@@ -18,6 +18,7 @@
         - name: Install pyenv - Ubuntu
           when: |
             (
+              false and
               ansible_facts['distribution'] == "Ubuntu" and
               "$HOME/.pyenv" is not exists
             )
