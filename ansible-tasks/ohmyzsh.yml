@@ -1,6 +1,12 @@
+- name: Check for ohmyzsh
+  become: false
+  stat:
+    path: "~/.oh-my-zsh"
+  register: ohmyzsh_path
+
 - name: Install ohmyzsh
   tags: ohmyzsh, dev
-  when: "'~/.oh-my-zsh' is not exists"
+  when: ohmyzsh_path.stat.exists == false
   become: false
   # ref: beginning of https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
   block:
@@ -28,12 +34,21 @@
         state: absent
       when: install_tempfile.path is defined
 
-  # ref: https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md#oh-my-zsh
-- name: Install zsh-autosuggestions
+- name: zsh-autosuggestions
   tags: zshauto, ohmyzsh, dev 
-  become: false
-  # repeating path here to avoid jinja2 warning
-  when: "'~/.oh-my-zsh/custom/plugins/zsh-autosuggestions' is not exists"
-  ansible.builtin.git: 
-    repo: "https://github.com/zsh-users/zsh-autosuggestions.git"
-    dest: "~/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+  vars:
+    zshauto_dir: "~/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+  block:       
+    - name: Check for zsh-autosuggestions
+      become: false
+      stat:
+        path: zshauto_dir
+      register: zshauto_path
+
+      # ref: https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md#oh-my-zsh
+    - name: Install zsh-autosuggestions
+      become: false
+      when: zshauto_path.stat.exists == flase
+      ansible.builtin.git: 
+        repo: "https://github.com/zsh-users/zsh-autosuggestions.git"
+        dest: zshauto_dir
