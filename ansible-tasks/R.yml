@@ -30,10 +30,10 @@
     #   rig list --json
     #   rig resolve {{ version }}
 
+    # note that this does not set the default unless it is the only version
     - name: Install R
       shell: |
         rig add {{ version }} --without-pak
-        rig default {{ version }}
       become: true
       vars:
         version: 4.3
