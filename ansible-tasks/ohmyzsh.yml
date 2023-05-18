@@ -46,6 +46,10 @@
         path: zshauto_dir
       register: zshauto_path
 
+    - name: Debug
+      debug:
+        var: zshauto_path
+
       # ref: https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md#oh-my-zsh
     - name: Install zsh-autosuggestions
       when: zshauto_path.stat.exists == false
