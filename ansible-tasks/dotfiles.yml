@@ -4,7 +4,7 @@
     dot_user: "pyqr-dev"
     dot_repo: ".dotfiles"
     dot_packages: "*/"
-  tags: dotfiles
+  tags: dotfiles, dotfiles-only
   block:
 
     - name: Clone repo
