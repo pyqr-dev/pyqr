@@ -16,10 +16,10 @@ As you might imagine, you need to [install Ansible](https://docs.ansible.com/ans
 ### Ubuntu
 
 ```bash
-sudo apt update
-sudo apt install software-properties-common
-sudo add-apt-repository --yes --update ppa:ansible/ansible
-sudo apt install ansible
+sudo -E apt update
+sudo -E apt install software-properties-common
+sudo -E add-apt-repository --yes --update ppa:ansible/ansible
+sudo -E apt install ansible
 ```
 
 ### MacOS
