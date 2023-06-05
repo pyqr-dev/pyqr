@@ -14,14 +14,21 @@
       become: false
       block:
         # ref: https://opensource.com/article/22/6/install-software-macos-ansible-homebrew
-        - name: Check homebrew - MacOS
+        - name: Check homebrew - MacOS Apple Silicon
           stat:
             path: /opt/homebrew/bin/brew
-          register: homebrew_check
+          register: homebrew_check_apple
+
+        - name: Check homebrew - MacOS Intel
+          stat:
+            path: /usr/local/bin/brew
+          register: homebrew_check_intel          
 
         # ref: https://brew.sh/
         - name: Install homebrew - MacOS
-          when: not homebrew_check.stat.exists
+          when: 
+            | (not homebrew_check_apple.stat.exists) and 
+              (not homebrew_check_intel.stat.exists)
           shell: |
             /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/{{ sha }}/install.sh)"
           vars:
