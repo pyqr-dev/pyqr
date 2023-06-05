@@ -64,7 +64,7 @@ ansible-playbook local.yml -K --tags "R, python, quarto"
 
 ```bash
 # using example tags
-ansible-pull https://github.com/pyqr-dev/pyqr.git -K --tags "R, python, quarto"
+ansible-pull --url https://github.com/pyqr-dev/pyqr.git -K --tags "R, python, quarto"
 ```
 
 To install the data stack, use the tags `"R, python, quarto"`.
