@@ -13,7 +13,7 @@ RUN .pyenv/bin/pyenv global ${PYTHON_VERSION}
 USER root 
 
 # ====== R
-ARG R_VERSION=4.3
+ARG R_VERSION=release
 ARG PAK_VERSION=devel
 
 # install R using rig

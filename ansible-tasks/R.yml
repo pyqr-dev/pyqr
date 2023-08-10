@@ -36,4 +36,4 @@
         rig add {{ version }} --without-pak
       become: true
       vars:
-        version: 4.3
+        version: release
