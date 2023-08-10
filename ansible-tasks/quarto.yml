@@ -13,7 +13,7 @@
 
     - name: Install quarto
       vars:
-        quarto_version: pre_release
+        quarto_version: release
       shell: |
         quig add {{ quarto_version }}      
       args:

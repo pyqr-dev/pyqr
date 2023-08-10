@@ -110,7 +110,7 @@
       environment:
         PATH: "{{ ansible_env.HOME }}/.pyenv/bin:{{ ansible_env.PATH }}"
       vars:
-        python_version: 3.11.2 
+        python_version: 3.11
       shell: |
         pyenv install -s {{ python_version }}
         pyenv global {{ python_version }}
