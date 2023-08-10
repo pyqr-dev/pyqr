@@ -3,7 +3,7 @@ ARG IMAGE_VERSION=edge-jammy
 FROM ${IMAGE_REPO}/pyqr-base:${IMAGE_VERSION}
 
 # ====== Python
-ARG PYTHON_VERSION=3.11.2
+ARG PYTHON_VERSION=3.11
 
 # install Python
 RUN .pyenv/bin/pyenv install -s ${PYTHON_VERSION}
@@ -13,7 +13,7 @@ RUN .pyenv/bin/pyenv global ${PYTHON_VERSION}
 USER root 
 
 # ====== R
-ARG R_VERSION=4.2.3
+ARG R_VERSION=4.3
 ARG PAK_VERSION=devel
 
 # install R using rig
@@ -33,7 +33,7 @@ ENV PKG_SYSREQS=true
 ENV R_PKG_SYSREQS2=true
 
 # ====== Quarto
-ARG QUARTO_VERSION=pre_release
+ARG QUARTO_VERSION=release
 
 # install Quarto
 # ref: https://github.com/pyqr-dev/quig
