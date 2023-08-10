@@ -1,6 +1,8 @@
 name: Docker - Orchestrate Build and Push
 
 on:
+  schedule: 
+    - cron: '15 15 * * 6' # 15h15 UTC every Saturday
   push:
     branches: ['main']
   pull_request:

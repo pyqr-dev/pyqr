@@ -42,6 +42,7 @@ jobs:
             suffix=-${{ matrix.dist }}
           tags: |
             type=edge
+            type=schedule,pattern=weekly
             type=ref,event=pr
 
       - name: Build and push image
