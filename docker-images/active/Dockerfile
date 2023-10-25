@@ -26,7 +26,7 @@ USER docker
 
 # ohmyzsh ref: https://ohmyz.sh/#install
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-# append previous contents, e.g. pyenv
+# new .zshrc: append previous contents, e.g. pyenv
 RUN cat ~/.zshrc.pre-oh-my-zsh >> ~/.zshrc
 
 # zsh-autocomplete ref: https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md#oh-my-zsh
