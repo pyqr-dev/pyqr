@@ -82,12 +82,15 @@ RUN apt-get clean \
 
 # add user `docker`
 RUN useradd docker \
-	&& mkdir /home/docker \
-	&& chown docker:docker /home/docker 
+  && mkdir /home/docker \
+  && chown docker:docker /home/docker 
 
 # run as `docker`
 USER docker
 WORKDIR /home/docker 
+
+# ====== bashrc
+COPY --chown=docker:docker .bashrc .bashrc
 
 # install pyenv (as user, `docker`)
 # ref: https://github.com/pyenv/pyenv-installer#install
