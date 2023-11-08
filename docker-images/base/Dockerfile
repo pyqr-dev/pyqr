@@ -21,7 +21,6 @@ ARG DEBIAN_FRONTEND=noninteractive
 #   locales (R)
 #   tzdata (R, tinytex)
 #   texinfo (R, tinytex - due to setup-tinytex action)
-#   vim (just in case)
 RUN apt-get update \
   && apt-get install -y\
   sudo \ 
@@ -33,8 +32,7 @@ RUN apt-get update \
   gdebi-core \
   locales \
   tzdata \
-  texinfo \
-  vim
+  texinfo
 
 # python-centric packages
 # ref: https://github.com/pyenv/pyenv/wiki#suggested-build-environment
