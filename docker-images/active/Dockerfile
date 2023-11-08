@@ -5,12 +5,11 @@ FROM ${IMAGE_REPO}/pyqr-batch:${IMAGE_VERSION}
 # need to install as root
 USER root 
 
-# zsh, stow, vim
+# zsh, stow
 RUN apt-get update \
   && apt-get install -y \
   zsh \
-  stow \
-  vim
+  stow 
 
 # ansible
 RUN apt-get install -y software-properties-common \
