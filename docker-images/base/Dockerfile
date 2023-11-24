@@ -74,9 +74,9 @@ RUN ARCH="$(arch)"; \
 # install qvm
 # ref: https://github.com/dpastoor/qvm/releases
 RUN wget https://github.com/dpastoor/qvm/releases/download/v0.3.0/qvm_Linux_x86_64.tar.gz -O /tmp/qvm.tar.gz \
-  && sudo tar xzf /tmp/qvm.tar.gz qvm \
-  && sudo mv qvm /usr/local/bin/qvm \
-  && sudo chmod +x /usr/local/bin/qvm 
+  && tar xzf /tmp/qvm.tar.gz qvm \
+  && mv qvm /usr/local/bin/qvm \
+  && chmod +x /usr/local/bin/qvm 
 
 # cleanup (normally last, but installing pyenv as docker user)
 RUN apt-get clean \
