@@ -71,10 +71,12 @@ RUN ARCH="$(arch)"; \
   if [ "$ARCH" = "aarch64" ]; then ARM64="-arm64"; else ARM64=""; fi; \
   curl -Ls https://github.com/r-lib/rig/releases/download/latest/rig-linux${ARM64}-latest.tar.gz | tar xz -C /usr/local
 
-# install quig
-# ref: https://github.com/pyqr-dev/quig
-RUN curl -Ls https://github.com/pyqr-dev/quig/releases/latest/download/quig.tar.gz | tar xz -C /opt \
-  && ln -sf /opt/quig/bin/quig /usr/local/bin/quig
+# install qvm
+# ref: https://github.com/dpastoor/qvm/releases
+RUN wget https://github.com/dpastoor/qvm/releases/download/v0.3.0/qvm_Linux_x86_64.tar.gz -O /tmp/qvm.tar.gz \
+  && sudo tar xzf /tmp/qvm.tar.gz qvm \
+  && sudo mv qvm /usr/local/bin/qvm \
+  && sudo chmod +x /usr/local/bin/qvm 
 
 # cleanup (normally last, but installing pyenv as docker user)
 RUN apt-get clean \
@@ -105,5 +107,12 @@ RUN cat ~/pyenv.sh >> ~/.profile
 RUN cat ~/pyenv.sh >> ~/.zshrc
 RUN cat ~/pyenv.sh >> ~/.zprofile
 RUN rm pyenv.sh
+
+COPY --chown=docker:docker --chmod=555 qvm.sh qvm.sh
+RUN cat ~/qvm.sh >> ~/.bashrc
+RUN cat ~/qvm.sh >> ~/.profile
+RUN cat ~/qvm.sh >> ~/.zprofile
+RUN cat ~/qvm.sh >> ~/.zprofile
+RUN rm qvm.sh
 
 CMD ["bash"]
