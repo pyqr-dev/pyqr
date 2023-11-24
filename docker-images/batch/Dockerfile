@@ -25,21 +25,22 @@ RUN rig add ${R_VERSION} --without-pak && \
 
 RUN versions="$(rig ls --json | grep '"name"' | sed 's/^.*\"name\": \"//' | sed 's/\",//')" && \
   for ver in $versions; do \
-    R-${ver} -q -e \
-    'install.packages("pak", lib = .Library, repos = sprintf("https://r-lib.github.io/p/pak/%s/%s/%s/%s", "devel", .Platform$pkgType, R.Version()$os, R.Version()$arch))'; \
+  R-${ver} -q -e \
+  'install.packages("pak", lib = .Library, repos = sprintf("https://r-lib.github.io/p/pak/%s/%s/%s/%s", "devel", .Platform$pkgType, R.Version()$os, R.Version()$arch))'; \
   done
 
 ENV PKG_SYSREQS=true
 ENV R_PKG_SYSREQS2=true
 
+# return to default user
+USER docker
+
 # ====== Quarto
 ARG QUARTO_VERSION=release
 
 # install Quarto
-# ref: https://github.com/pyqr-dev/quig
-RUN quig add ${QUARTO_VERSION}
-
-# return to default user
-USER docker
+# ref: https://github.com/dpastoor/qvm#installing-versions
+RUN qvm install ${QUARTO_VERSION} \
+  && qvm use ${QUARTO_VERSION}
 
 CMD ["bash"]
