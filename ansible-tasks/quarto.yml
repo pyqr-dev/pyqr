@@ -1,20 +1,56 @@
-- name: Install quarto using quig
+- name: Install quarto using qvm
   tags: quarto, data
-  become: true
+  vars:
+    quarto_version: release
+    qvm_version: "0.3.0"
+    qvm_config: |
+      export PATH="$(qvm path add)"
   block:
-      # ref: https://github.com/pyqr-dev/quig
-    - name: Install quig
+    # ref: https://github.com/dpastoor/qvm/releases
+    - name: Install qvm
+      become: true
       shell: |
-        curl -Ls https://github.com/pyqr-dev/quig/releases/latest/download/quig.tar.gz |
-          tar xz -C /opt
-        ln -sf /opt/quig/bin/quig /usr/local/bin/quig
+        wget https://github.com/dpastoor/qvm/releases/download/v{{ qvm_version }}/qvm_Linux_x86_64.tar.gz -O /tmp/qvm.tar.gz \
+        tar xzf /tmp/qvm.tar.gz qvm \
+        mv qvm /usr/local/bin/qvm \
+        chmod +x /usr/local/bin/qvm 
       args:
         executable: /bin/bash
 
+    - name: Update login scripts for qvm
+      become: false
+      block:
+        - name: Amend .bashrc
+          ansible.builtin.blockinfile:
+            path: ~/.bashrc
+            create: true
+            block: "{{ qvm_config }}"
+        
+        - name: Amend .profile
+          ansible.builtin.blockinfile:
+            path: ~/.profile
+            create: true
+            block: "{{ qvm_config }}"
+        
+        - name: Amend .zshrc
+          ansible.builtin.blockinfile:
+            path: ~/.zshrc
+            create: true
+            block: "{{ qvm_config }}"
+        
+        - name: Amend .zprofile
+          ansible.builtin.blockinfile:
+            path: ~/.zprofile
+            create: true
+            block: "{{ qvm_config }}"
+
+    # ref: https://github.com/dpastoor/qvm#installing-versions
     - name: Install quarto
-      vars:
-        quarto_version: release
+      become: false
+      environment:
+        PATH: "$(qvm path add)"
       shell: |
-        quig add {{ quarto_version }}      
+        qvm install {{ quarto_version }} 
+        qvm use {{ quarto_version }}    
       args:
         executable: /bin/bash
