@@ -22,7 +22,7 @@
     - name: Install qvm (macOS)
       when: ansible_facts['os_family'] == "Darwin"
       become: false
-      community.general.homebrew_tap:
+      community.general.homebrew:
         name: dpastoor/tap/qvm
         state: present
 
