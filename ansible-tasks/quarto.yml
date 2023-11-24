@@ -7,7 +7,8 @@
       export PATH="$(qvm path add)"
   block:
     # ref: https://github.com/dpastoor/qvm/releases
-    - name: Install qvm
+    - name: Install qvm (ubuntu)
+      when: ansible_facts['distribution'] == "Ubuntu"
       become: true
       shell: |
         wget https://github.com/dpastoor/qvm/releases/download/v{{ qvm_version }}/qvm_Linux_x86_64.tar.gz -O /tmp/qvm.tar.gz 
@@ -16,6 +17,14 @@
         chmod +x /usr/local/bin/qvm 
       args:
         executable: /bin/bash
+
+    # ref: https://github.com/dpastoor/qvm/releases
+    - name: Install qvm (macOS)
+      when: ansible_facts['os_family'] == "Darwin"
+      become: false
+      community.general.homebrew_tap:
+        name: dpastoor/tap/qvm
+        state: present
 
     - name: Update login scripts for qvm
       become: false
