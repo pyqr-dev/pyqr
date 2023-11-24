@@ -11,8 +11,8 @@
       become: true
       shell: |
         wget https://github.com/dpastoor/qvm/releases/download/v{{ qvm_version }}/qvm_Linux_x86_64.tar.gz -O /tmp/qvm.tar.gz 
-        tar xzf /tmp/qvm.tar.gz qvm \
-        mv qvm /usr/local/bin/qvm \
+        tar xzf /tmp/qvm.tar.gz qvm 
+        mv qvm /usr/local/bin/qvm 
         chmod +x /usr/local/bin/qvm 
       args:
         executable: /bin/bash
