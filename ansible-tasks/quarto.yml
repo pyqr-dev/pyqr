@@ -7,7 +7,7 @@
       export PATH="$(qvm path add)"
   block:
     # ref: https://github.com/dpastoor/qvm/releases
-    - name: Install qvm (ubuntu)
+    - name: Install qvm - Ubuntu
       when: ansible_facts['distribution'] == "Ubuntu"
       become: true
       shell: |
@@ -19,7 +19,7 @@
         executable: /bin/bash
 
     # ref: https://github.com/dpastoor/qvm/releases
-    - name: Install qvm (macOS)
+    - name: Install qvm - MacOS
       when: ansible_facts['os_family'] == "Darwin"
       become: false
       community.general.homebrew:
