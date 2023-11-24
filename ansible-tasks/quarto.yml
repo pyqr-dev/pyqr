@@ -47,10 +47,8 @@
     # ref: https://github.com/dpastoor/qvm#installing-versions
     - name: Install quarto
       become: false
-      environment:
-        PATH: "$(qvm path add)"
       shell: |
-        qvm install {{ quarto_version }} 
-        qvm use {{ quarto_version }}    
+        /usr/local/bin/qvm install {{ quarto_version }} 
+        /usr/local/bin/qvm use {{ quarto_version }}    
       args:
         executable: /bin/bash
