@@ -8,7 +8,7 @@ on:
   pull_request:
     branches: ['main']
     # runtimes can be long: restrict to changes within specified directories
-    # paths: ['docker-images/**', '.github/workflows/**.yml']
+    paths: ['docker-images/**', '.github/workflows/**.yml']
 
 jobs:
   base:
