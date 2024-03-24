@@ -43,7 +43,7 @@ ARG QUARTO_VERSION=release
 RUN qvm install ${QUARTO_VERSION} \
   && qvm use ${QUARTO_VERSION}
 
-RUN which python
+RUN ~/.pyenv/shims/python --version
 
 # ====== pipx
 # ref: https://github.com/pypa/pipx
