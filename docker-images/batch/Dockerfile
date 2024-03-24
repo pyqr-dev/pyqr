@@ -45,8 +45,8 @@ RUN qvm install ${QUARTO_VERSION} \
 
 # ====== pipx
 # ref: https://github.com/pypa/pipx
-RUN python3 -m pip install --user pipx && \
-  python3 -m pipx ensurepath
+RUN python -m pip install --user pipx && \
+  python -m pipx ensurepath
 
 USER root
 # optional to allow pipx actions with --global argument
