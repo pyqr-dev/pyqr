@@ -49,6 +49,6 @@ RUN ~/.pyenv/shims/python -m pip install --user pipx && \
   ~/.pyenv/shims/python -m pipx ensurepath
 
 # ====== Nox
-#RUN pipx install nox
+RUN ~/.local/bin/pipx install nox
 
 CMD ["bash"]
