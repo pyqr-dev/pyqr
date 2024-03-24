@@ -43,17 +43,10 @@ ARG QUARTO_VERSION=release
 RUN qvm install ${QUARTO_VERSION} \
   && qvm use ${QUARTO_VERSION}
 
-RUN ~/.pyenv/shims/python --version
-
 # ====== pipx
 # ref: https://github.com/pypa/pipx
-#RUN python -m pip install --user pipx && \
-#  python -m pipx ensurepath
-
-#USER root
-# optional to allow pipx actions with --global argument
-#RUN command pipx ensurepath --global 
-#USER docker 
+RUN ~/.pyenv/shims/python -m pip install --user pipx && \
+  ~/.pyenv/shims/python -m pipx ensurepath
 
 # ====== Nox
 #RUN pipx install nox
