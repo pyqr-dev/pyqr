@@ -45,6 +45,8 @@ RUN qvm install ${QUARTO_VERSION} \
 
 # ====== pipx
 # ref: https://github.com/pypa/pipx
+# using the full paths to python (and pipx below) because updates
+# to $PATH are not accessibile because login scripts have not run
 RUN ~/.pyenv/shims/python -m pip install --user pipx && \
   ~/.pyenv/shims/python -m pipx ensurepath
 
