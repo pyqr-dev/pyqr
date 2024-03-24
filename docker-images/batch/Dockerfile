@@ -43,4 +43,14 @@ ARG QUARTO_VERSION=release
 RUN qvm install ${QUARTO_VERSION} \
   && qvm use ${QUARTO_VERSION}
 
+# ====== pipx
+# ref: https://github.com/pypa/pipx
+# using the full paths to python (and pipx below) because updates
+# to $PATH are not accessibile because login scripts have not run
+RUN ~/.pyenv/shims/python -m pip install --user pipx && \
+  ~/.pyenv/shims/python -m pipx ensurepath
+
+# ====== Nox
+RUN ~/.local/bin/pipx install nox
+
 CMD ["bash"]
