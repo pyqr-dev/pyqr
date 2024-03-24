@@ -43,4 +43,17 @@ ARG QUARTO_VERSION=release
 RUN qvm install ${QUARTO_VERSION} \
   && qvm use ${QUARTO_VERSION}
 
+# ====== pipx
+# ref: https://github.com/pypa/pipx
+RUN python3 -m pip install --user pipx && \
+  python3 -m pipx ensurepath
+
+USER root
+# optional to allow pipx actions with --global argument
+RUN command pipx ensurepath --global 
+USER docker 
+
+# ====== Nox
+RUN pipx install nox
+
 CMD ["bash"]
